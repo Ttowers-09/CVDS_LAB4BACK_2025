@@ -20,7 +20,11 @@ public class LaboratoryService {
         Laboratories = laboratories;
     }
 
-    
+    public List<Laboratory> addLaboratory(Laboratory Laboratory){
+        List<Laboratory> labs = getLaboratories();
+        labs.add(Laboratory);
+        return labs;
+    };
 
     public List<Laboratory> deletetLaboratories(Laboratory Laboratory){
         List<Laboratory> labs = getLaboratories();
