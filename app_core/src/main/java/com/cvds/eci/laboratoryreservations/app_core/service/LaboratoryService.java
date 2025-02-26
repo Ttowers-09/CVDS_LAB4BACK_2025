@@ -12,7 +12,6 @@ public class LaboratoryService {
 
     public LaboratoryService(){
         laboratories = new ArrayList<>();
-        laboratories.add(new Laboratory("LABINFO", "Bloque B", 30, true));
     }
 
     public List<Laboratory> getLaboratories() {
@@ -32,10 +31,8 @@ public class LaboratoryService {
      * @return returns a List of Laboratory objects after adding a new
      * Laboratory object to the existing list of laboratories.
      */
-    public List<Laboratory> addLaboratory(Laboratory laboratory){
-        List<Laboratory> labs = getLaboratories();
-        labs.add(laboratory);
-        return labs;
+    public void addLaboratory(Laboratory laboratory){
+        laboratories.add(laboratory);
     }
     
     
