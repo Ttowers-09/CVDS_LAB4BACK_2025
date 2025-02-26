@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-AppCoreApplication<app_core>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.cvds.eci.laboratoryreservations.app_core.AppCoreApplication",
+            "projectName": "app_core",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}
