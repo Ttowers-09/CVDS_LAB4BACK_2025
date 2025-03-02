@@ -1,4 +1,4 @@
-package com.cvds.eci.bookingreservations.app_core.controller.app_core;
+package com.cvds.eci.laboratoryreservations.app_core;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
