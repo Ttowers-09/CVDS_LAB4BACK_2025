@@ -1,11 +1,10 @@
 package com.cvds.eci.laboratoryreservations.app_core.service;
 
-import java.util.ArrayList;
-import java.util.List;
 
+import java.util.List;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.cvds.eci.laboratoryreservations.app_core.model.Laboratory;
 import com.cvds.eci.laboratoryreservations.app_core.repository.LaboratoryRepository;
 @Service
@@ -48,6 +47,35 @@ public class LaboratoryService {
      */
     public void deleteLaboratory(String idLaboratory){
         labRepository.deleteById(idLaboratory);
+    }
+
+
+    /**
+     * The `updateLaboratory` function updates a laboratory entity in the repository based on the
+     * provided ID with the information from the updatedLab object.
+     * 
+     * @param idLaboratory The `idLaboratory` parameter is the unique identifier of the laboratory that
+     * you want to update. It is used to retrieve the specific laboratory entity from the repository
+     * for updating.
+     * @param updatedLab `updatedLab` is an object of type `Laboratory` that contains the updated
+     * information for a laboratory entity. It may include the new name, location, and capacity for the
+     * laboratory that needs to be updated in the repository.
+     */
+    public void updateLaboratory(String idLaboratory,Laboratory updatedLab) {
+        // The line `Optional<Laboratory> labOptional = labRepository.findById(idLaboratory);` is
+        // retrieving a laboratory entity from the repository based on the provided `idLaboratory`.
+        Optional<Laboratory> labOptional = labRepository.findById(idLaboratory);
+
+        if (labOptional.isPresent()) {
+            Laboratory lab = labOptional.get();
+            if (updatedLab.getName() != null) lab.setName(updatedLab.getName());
+            if (updatedLab.getLocation() != null) lab.setLocation(updatedLab.getLocation());
+            if (updatedLab.getCapacity() != 0) lab.setCapacity(updatedLab.getCapacity());
+            lab.setAvaliable(updatedLab.isAvaliable());
+            labRepository.save(lab);
+        } else {
+            throw new RuntimeException("Laboratory with ID " + idLaboratory + " not found");
+        }
     }
     
 }
