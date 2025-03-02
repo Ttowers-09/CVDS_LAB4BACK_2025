@@ -1,6 +1,7 @@
 package com.cvds.eci.laboratoryreservations.app_core.model;
 import java.time.LocalDateTime;
 
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -10,11 +11,21 @@ public class Booking {
     @Id
     private String id;
     private String userId;
-    private String laboratoryId;
+    private String laboratoryName;
     private LocalDateTime date;
+    private String description;
     private LocalDateTime initHour;
     private LocalDateTime finalHour;
-    private String description;
+    
+    public Booking(String userId, String laboratoryName, LocalDateTime date, LocalDateTime initHour, LocalDateTime finalHour, String description) {
+        this.userId = userId;
+        this.laboratoryName = laboratoryName;
+        this.date = date;
+        this.initHour = initHour;
+        this.finalHour = finalHour;
+        this.description = description;
+    }
+
 
     public String getId() {
         return id;
@@ -32,13 +43,6 @@ public class Booking {
         this.userId = userId;
     }
 
-    public String getLaboratoryId() {
-        return laboratoryId;
-    }
-
-    public void setLaboratoryId(String laboratoryId) {
-        this.laboratoryId = laboratoryId;
-    }
 
     public LocalDateTime getDate() {
         return date;
@@ -47,6 +51,16 @@ public class Booking {
     public void setDate(LocalDateTime date) {
         this.date = date;
     }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    
 
     public LocalDateTime getInitHour() {
         return initHour;
@@ -64,24 +78,17 @@ public class Booking {
         this.finalHour = finalHour;
     }
 
-    public String getDescription() {
-        return description;
+    public String getLaboratoryName() {
+        return laboratoryName;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setLaboratoryName(String laboratoryName) {
+        this.laboratoryName = laboratoryName;
     }
 
-    public Booking(String userId, String laboratoryId, LocalDateTime date, String description) {
-        this.userId = userId;
-        this.laboratoryId = laboratoryId;
-        this.date = date;
-        this.description = description;
-    }
     
-
-
-
+    
+    
 
 
     
