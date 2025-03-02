@@ -1,7 +1,9 @@
 package com.cvds.eci.laboratoryreservations.app_core.model;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-@Document(collection = "laboratories") 
+
+@Document(collection = "laboratories")
+
 public class Laboratory {
     
     @Id
