@@ -1,7 +1,8 @@
 package com.cvds.eci.laboratoryreservations.app_core.model;
+import java.time.LocalDateTime;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-import java.time.LocalDateTime;
 
 
 @Document(collection = "bookings")
@@ -21,5 +22,12 @@ public class Booking {
         this.date = date;
         this.description = description;
     }
+    
+
+
+
+
+
+    
 }
 
