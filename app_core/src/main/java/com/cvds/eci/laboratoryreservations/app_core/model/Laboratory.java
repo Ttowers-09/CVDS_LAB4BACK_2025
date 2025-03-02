@@ -15,8 +15,9 @@ public class Laboratory {
     private int capacity;
     private boolean avaliable;
 
+	
 
-    public Laboratory(String name, String location,int capacity,boolean avaliable) {
+	public Laboratory(String name, String location,int capacity,boolean avaliable) {
         this.name = name;
         this.location = location;
         this.capacity = capacity;
@@ -71,6 +72,8 @@ public class Laboratory {
 	public void setAvaliable(boolean avaliable) {
 		this.avaliable = avaliable;
 	}
+
+	
 
 
 }
