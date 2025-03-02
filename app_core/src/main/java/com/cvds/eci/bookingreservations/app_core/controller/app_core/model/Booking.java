@@ -1,4 +1,4 @@
-package com.cvds.eci.laboratoryreservations.app_core.model;
+package com.cvds.eci.bookingreservations.app_core.controller.app_core.model;
 import java.time.LocalDateTime;
 
 import org.springframework.data.annotation.Id;

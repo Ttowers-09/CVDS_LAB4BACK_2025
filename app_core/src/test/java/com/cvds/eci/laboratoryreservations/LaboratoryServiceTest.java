@@ -6,8 +6,8 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
-import com.cvds.eci.laboratoryreservations.app_core.model.Laboratory;
-import com.cvds.eci.laboratoryreservations.app_core.service.LaboratoryService;
+import com.cvds.eci.bookingreservations.app_core.controller.app_core.model.Laboratory;
+import com.cvds.eci.bookingreservations.app_core.controller.app_core.service.LaboratoryService;
 
 
 public class LaboratoryServiceTest {

@@ -1,4 +1,4 @@
-package com.cvds.eci.laboratoryreservations.app_core.model;
+package com.cvds.eci.bookingreservations.app_core.controller.app_core.model;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;

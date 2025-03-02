@@ -1,4 +1,4 @@
-package com.cvds.eci.laboratoryreservations.app_core.controller;
+package com.cvds.eci.bookingreservations.app_core.controller.app_core.controller;
 
 import java.util.HashMap;
 import java.util.List;
@@ -12,8 +12,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.cvds.eci.laboratoryreservations.app_core.model.Laboratory;
-import com.cvds.eci.laboratoryreservations.app_core.service.LaboratoryService;
+import com.cvds.eci.bookingreservations.app_core.controller.app_core.model.Laboratory;
+import com.cvds.eci.bookingreservations.app_core.controller.app_core.service.LaboratoryService;
+
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
