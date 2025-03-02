@@ -13,24 +13,24 @@ public class Laboratory {
 	private String name;
     private String location;
     private int capacity;
-    private boolean avaliable;
+    private boolean available;
 
 	
 
-	public Laboratory(String name, String location,int capacity,boolean avaliable) {
+	public Laboratory(String name, String location,int capacity,boolean available) {
         this.name = name;
         this.location = location;
         this.capacity = capacity;
-        this.avaliable = avaliable;
+        this.available = available;
     }
     
     @Override
     public String toString() {
         return "Laboratory{" +
-               "nombre='" + name + '\'' +
-               ", ubicación='" + location + '\'' +
-               ", capacidad=" + capacity +
-               '}' + "available: " + avaliable;
+					   "nombre='" + name + '\'' +
+					   ", ubicación='" + location + '\'' +
+					   ", capacidad=" + capacity +
+					   '}' + "available: " + available;
     }
     
     public String getId() {
@@ -65,12 +65,12 @@ public class Laboratory {
 		this.capacity = capacity;
 	}
 
-	public boolean isAvaliable() {
-		return avaliable;
+	public boolean isAvailable() {
+		return available;
 	}
 
-	public void setAvaliable(boolean avaliable) {
-		this.avaliable = avaliable;
+	public void setAvailable(boolean available) {
+		this.available = available;
 	}
 
 	

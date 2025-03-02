@@ -72,7 +72,7 @@ public class LaboratoryService {
             if (updatedLab.getName() != null) lab.setName(updatedLab.getName());
             if (updatedLab.getLocation() != null) lab.setLocation(updatedLab.getLocation());
             if (updatedLab.getCapacity() != 0) lab.setCapacity(updatedLab.getCapacity());
-            lab.setAvaliable(updatedLab.isAvaliable());
+            lab.setAvailable(updatedLab.isAvailable());
             labRepository.save(lab);
         } else {
             throw new RuntimeException("Laboratory with ID " + idLaboratory + " not found");
