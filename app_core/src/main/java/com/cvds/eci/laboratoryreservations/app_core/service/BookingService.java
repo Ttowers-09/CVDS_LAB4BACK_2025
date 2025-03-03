@@ -39,8 +39,8 @@ public class BookingService {
      * @return The `addBooking` method returns a `Booking` object.
      */
     public Booking addBooking(Booking booking) {
-        List<Booking> conflictingBookings = bookingRepository.findByLaboratoryNameAndInitHourLessThanAndFinalHourGreaterThan(
-            booking.getLaboratoryName(), booking.getFinalHour(), booking.getInitHour()
+        List<Booking> conflictingBookings = bookingRepository.findByUserIdAndLabIdAndInitHourLessThanAndFinalHourGreaterThan(
+            booking.getUser().getId(),booking.getLab().getId(), booking.getFinalHour(), booking.getInitHour()
         );
     
         if (!conflictingBookings.isEmpty()) {

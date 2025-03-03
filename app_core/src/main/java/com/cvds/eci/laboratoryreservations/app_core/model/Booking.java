@@ -3,6 +3,7 @@ import java.time.LocalDateTime;
 
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 
@@ -11,9 +12,7 @@ public class Booking {
     @Id
     private String id;
 
-    private String userId;
 
-    private String laboratoryName;
 
     private LocalDateTime date;
     private String description;
@@ -22,11 +21,16 @@ public class Booking {
     
     private LocalDateTime finalHour;
 
+    @DBRef
+    private User user;
+
+    @DBRef 
+    private Laboratory lab;
 
     
-    public Booking(String userId, String laboratoryName, LocalDateTime date, LocalDateTime initHour, LocalDateTime finalHour, String description) {
-        this.userId = userId;
-        this.laboratoryName = laboratoryName;
+    public Booking(User user, Laboratory lab, LocalDateTime date, LocalDateTime initHour, LocalDateTime finalHour, String description) {
+        this.user = user;
+        this.lab = lab;
         this.date = date;
         this.initHour = initHour;
         this.finalHour = finalHour;
@@ -42,13 +46,6 @@ public class Booking {
         this.id = id;
     }
 
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
 
 
     public LocalDateTime getDate() {
@@ -85,13 +82,17 @@ public class Booking {
         this.finalHour = finalHour;
     }
 
-    public String getLaboratoryName() {
-        return laboratoryName;
+
+    public User getUser() {
+        return user;
     }
 
-    public void setLaboratoryName(String laboratoryName) {
-        this.laboratoryName = laboratoryName;
+
+    public Laboratory getLab() {
+        return lab;
     }
+
+
 
     
     
