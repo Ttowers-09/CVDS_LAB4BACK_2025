@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -58,7 +57,6 @@ public class LaboratoryController {
     @PostMapping("/labs")
     public ResponseEntity<?> addLaboratory(@RequestBody Laboratory laboratory) { // @RequestBody Convierte automáticamente el JSON del cuerpo de la petición en un objeto Java.
         labService.addLaboratory(laboratory); // Guarda y obtiene el ID
-        laboratory.setId(String.valueOf(System.currentTimeMillis())); // ID temporal
         Map<String, String> response = new HashMap<String, String>();
         response.put("response", "Laboratory Insert OK");
         return ResponseEntity.status(201).body(response);

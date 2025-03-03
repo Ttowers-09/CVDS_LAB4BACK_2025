@@ -10,12 +10,19 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Booking {
     @Id
     private String id;
+
     private String userId;
+
     private String laboratoryName;
+
     private LocalDateTime date;
     private String description;
+
     private LocalDateTime initHour;
+    
     private LocalDateTime finalHour;
+
+
     
     public Booking(String userId, String laboratoryName, LocalDateTime date, LocalDateTime initHour, LocalDateTime finalHour, String description) {
         this.userId = userId;

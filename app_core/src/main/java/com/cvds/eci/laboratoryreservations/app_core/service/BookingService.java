@@ -1,7 +1,11 @@
 package com.cvds.eci.laboratoryreservations.app_core.service;
 
+
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+
+import javax.management.RuntimeErrorException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,16 +39,17 @@ public class BookingService {
      * @return The `addBooking` method returns a `Booking` object.
      */
     public Booking addBooking(Booking booking) {
-        Optional<Booking> existingBooking = bookingRepository.findByLaboratoryNameAndInitHour(
-            booking.getLaboratoryName(), booking.getInitHour()
+        List<Booking> conflictingBookings = bookingRepository.findByLaboratoryNameAndInitHourLessThanAndFinalHourGreaterThan(
+            booking.getLaboratoryName(), booking.getFinalHour(), booking.getInitHour()
         );
-        
-        if (existingBooking.isPresent()) {
-            throw new RuntimeException("Reservation already exists");
+    
+        if (!conflictingBookings.isEmpty()) {
+            throw new RuntimeException("Reservation already exists during this time slot.");
         }
     
         return bookingRepository.save(booking);
     }
+    
 
     public void deleteBooking(String id) {
         bookingRepository.deleteById(id);
