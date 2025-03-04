@@ -8,12 +8,13 @@ public class Laboratory {
     
     @Id
     private String id;
-    
 
 	private String name;
     private String location;
     private int capacity;
     private boolean available;
+
+	
 
 
 	public Laboratory(String name, String location,int capacity,boolean available) {

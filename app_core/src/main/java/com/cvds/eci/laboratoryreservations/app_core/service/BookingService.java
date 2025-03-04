@@ -44,7 +44,6 @@ public class BookingService {
         if (!conflictingBookings.isEmpty()) {
             throw new RuntimeException("Reservation already exists during this time slot.");
         }
-    
         return bookingRepository.save(booking);
     }
     

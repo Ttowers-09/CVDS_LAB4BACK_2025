@@ -38,7 +38,7 @@ public class BookingController {
             List<Booking> bookings = bookingService.getAllBookings();
             return ResponseEntity.ok(bookings);  
         }catch(RuntimeException e){
-            return ResponseEntity.status(500).body(Collections.singletonMap("error", "e"));
+            return ResponseEntity.status(500).body(Collections.singletonMap("error", e));
         }
         
     }
@@ -59,7 +59,7 @@ public class BookingController {
             bookingService.addBooking(booking); // Guarda y obtiene el ID
             return ResponseEntity.status(201).body(Collections.singletonMap("response", "Booking Insert OK"));
         }catch(RuntimeException e){
-            return ResponseEntity.status(500).body(Collections.singletonMap("error", "e"));
+            return ResponseEntity.status(500).body(Collections.singletonMap("error", e));
         }
     }
 
