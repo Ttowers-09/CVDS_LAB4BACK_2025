@@ -1,28 +1,26 @@
 package com.cvds.eci.laboratoryreservations.app_core.controller;
 
 
-import java.util.HashMap;
+import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cvds.eci.laboratoryreservations.app_core.model.Laboratory;
 import com.cvds.eci.laboratoryreservations.app_core.service.LaboratoryService;
 
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-
 //@CrossOrigin(origins = "http://localhost:3000") conexión a react
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/labs")
 public class LaboratoryController {
     private final LaboratoryService labService;
 
@@ -37,10 +35,14 @@ public class LaboratoryController {
      * @return A list of Laboratory objects is being returned in the ResponseEntity body.
      */
     //@CrossOrigin(origins = "http://localhost:3000")
-    @GetMapping("/labs")
+    @GetMapping
     public ResponseEntity<?> getLaboratories(){
-        List<Laboratory> laboratories = labService.getLaboratories();
-        return ResponseEntity.ok(laboratories);
+        try{
+            List<Laboratory> laboratories = labService.getLaboratories();
+            return ResponseEntity.ok(laboratories);
+        }catch(RuntimeException e){
+            return ResponseEntity.status(500).body(Collections.singletonMap("error", "Ha ocurrido un error al listar los labotatorio :("));
+        }
 
     }
 
@@ -54,21 +56,30 @@ public class LaboratoryController {
      * @return A ResponseEntity object with a status code of 201 (Created) and a body containing a Map
      * with a "response" key and the value "Laboratory Insert OK".
      */
-    @PostMapping("/labs")
+    @PostMapping
     public ResponseEntity<?> addLaboratory(@RequestBody Laboratory laboratory) { // @RequestBody Convierte automáticamente el JSON del cuerpo de la petición en un objeto Java.
-        labService.addLaboratory(laboratory); // Guarda y obtiene el ID
-        Map<String, String> response = new HashMap<String, String>();
-        response.put("response", "Laboratory Insert OK");
-        return ResponseEntity.status(201).body(response);
+        try {
+            labService.addLaboratory(laboratory); // Guarda y obtiene el ID
+            return ResponseEntity.status(201).body(Collections.singletonMap("response", " Laboratory Insert OK"));
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body(Collections.singletonMap("error", "El laboratorio con nombre " + laboratory.getName() + " ya existe" ));
+        }
+        
 
     }
 
-    @DeleteMapping("/labs/{id}")
-    public ResponseEntity<?> deleteLaboratory(@PathVariable String id){
-        Map<String, String> response = new HashMap<String, String>();
-        response.put("response", "Laboratory: " + id  + " Deleted OK");
-        return ResponseEntity.ok().body(response);
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteLaboratory(@PathVariable String id) {
+        try {
+            labService.deleteLaboratory(id);
+            return ResponseEntity.status(200).body(Collections.singletonMap("response", "Laboratory: " + id + " Deleted OK :)"));
+        }catch (RuntimeException e) {
+            return ResponseEntity.status(500).body(Collections.singletonMap("error", "Ha ocurrido un error al intentar eliminar el laboratorio :("));
+        }
     }
+
+        
+        
 
     /**
      * This Java function updates the name of a laboratory using the provided ID and new name in the
@@ -82,10 +93,15 @@ public class LaboratoryController {
      * @return The method is returning a ResponseEntity with a message "Laboratory updated
      * successfully" in the response body.
      */
-    @PutMapping("/labs/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<?> updateLaboratoryName(@PathVariable String id, @RequestBody Laboratory updatedLab) {
-        labService.updateLaboratory(id, updatedLab);
-        return ResponseEntity.ok().body("Laboratory updated OK");
+        try {
+            labService.updateLaboratory(id, updatedLab);
+            return ResponseEntity.ok().body("Laboratory updated OK");
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body(Collections.singletonMap("error", "Ha ocurrido un error al intentar actualizar el laboratorio :("));
+        }
+        
     }
     
     

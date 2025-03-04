@@ -1,26 +1,25 @@
 package com.cvds.eci.laboratoryreservations.app_core.controller;
 
-import java.util.HashMap;
+import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cvds.eci.laboratoryreservations.app_core.model.Booking;
 import com.cvds.eci.laboratoryreservations.app_core.service.BookingService;
 
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/bookings")
 public class BookingController {
+
     private final BookingService bookingService;
 
     public BookingController(BookingService bookingService) {
@@ -33,11 +32,15 @@ public class BookingController {
      * 
      * @return A list of bookings objects is being returned in the ResponseEntity body.
      */
-    @GetMapping("/bookings")
+    @GetMapping
     public ResponseEntity<?> getBookings(){
-        List<Booking> bookings = bookingService.getAllBookings();
-        return ResponseEntity.ok(bookings);
-
+        try{
+            List<Booking> bookings = bookingService.getAllBookings();
+            return ResponseEntity.ok(bookings);  
+        }catch(RuntimeException e){
+            return ResponseEntity.status(500).body(Collections.singletonMap("error", "e"));
+        }
+        
     }
 
     /**
@@ -50,24 +53,37 @@ public class BookingController {
      * @return A ResponseEntity object with a status code of 201 (Created) and a body containing a Map
      * with a "response" key and the value "booking Insert OK".
      */
-    @PostMapping("/bookings")
+    @PostMapping
     public ResponseEntity<?> addBooking(@RequestBody Booking booking) { // @RequestBody Convierte automáticamente el JSON del cuerpo de la petición en un objeto Java.
-        bookingService.addBooking(booking); // Guarda y obtiene el ID
-
-        Map<String, String> response = new HashMap<String, String>();
-        response.put("response", "Booking Insert OK");
-        return ResponseEntity.status(201).body(response);
-
+        try{
+            bookingService.addBooking(booking); // Guarda y obtiene el ID
+            return ResponseEntity.status(201).body(Collections.singletonMap("response", "Booking Insert OK"));
+        }catch(RuntimeException e){
+            return ResponseEntity.status(500).body(Collections.singletonMap("error", "e"));
+        }
     }
 
-    @DeleteMapping("/bookings/{id}")
+   @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteBooking(@PathVariable String id){
-        bookingService.deleteBooking(id);
-        Map<String, String> response = new HashMap<String, String>();
-        response.put("response", "booking: " + id  + " Deleted OK");
-        return ResponseEntity.ok(response);
+        try{
+            String bookingForDelete = bookingService.deleteBooking(id);
+            return ResponseEntity.status(200).body(Collections.singletonMap("response", "booking: " + bookingForDelete  + " Delete OK"));
+        } catch(RuntimeException e ){
+            return ResponseEntity.status(500).body(Collections.singletonMap("error", e));
+        }
     }
 
-    
+
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getBookingById(@PathVariable String id){
+        try{
+            Booking bukingSearch = bookingService.findById(id);
+            return ResponseEntity.status(200).body(bukingSearch);
+        }catch(RuntimeException e){
+            return ResponseEntity.status(500).body(Collections.singletonMap("error", e));
+        }
+        
+
+    }
     
 }

@@ -15,7 +15,6 @@ public class Laboratory {
     private int capacity;
     private boolean available;
 
-	
 
 	public Laboratory(String name, String location,int capacity,boolean available) {
         this.name = name;
