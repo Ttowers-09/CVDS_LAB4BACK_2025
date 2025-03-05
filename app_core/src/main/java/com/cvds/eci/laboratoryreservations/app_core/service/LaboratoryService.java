@@ -3,6 +3,7 @@ package com.cvds.eci.laboratoryreservations.app_core.service;
 
 import java.util.List;
 import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,7 +27,12 @@ public class LaboratoryService {
     * @return A list of Laboratory objects is being returned.
     */
     public List<Laboratory> getLaboratories() {
-        return labRepository.findAll();
+
+        List<Laboratory> list = labRepository.findAll();
+        if (list.isEmpty()){
+            throw new RuntimeException("The list is empty");
+        }
+        return list;
     }
     
     /**
@@ -35,9 +41,14 @@ public class LaboratoryService {
      * @param laboratory The `addLaboratory` method takes a `Laboratory` object as a parameter and
      * saves it using the `labRepository`.
      */
-    public Laboratory addLaboratory(Laboratory laboratory){
+    public Laboratory addLaboratory(Laboratory laboratory) {
+        Laboratory existingLab = labRepository.findByName(laboratory.getName());
+        if (existingLab != null) {
+            throw new RuntimeException("El laboratorio con nombre " + laboratory.getName() + " ya existe.");
+        }
         return labRepository.save(laboratory);
     }
+    
 
     /**
      * The `deleteLaboratory` function deletes a laboratory record from the repository based on the
@@ -46,10 +57,15 @@ public class LaboratoryService {
      * @param idLaboratory The `idLaboratory` parameter is a unique identifier that is used to specify
      * which laboratory record should be deleted from the database.
      */
-    public void deleteLaboratory(String idLaboratory){
-        labRepository.deleteById(idLaboratory);
+    public void deleteLaboratory(String id){
+        Laboratory lab = labRepository.findById(id).orElse(null);
+        if(lab == null){
+            throw new RuntimeException("No Existe el laboratorio a eliminar");
+        }
+        labRepository.deleteById(id);
     }
 
+ 
 
     /**
      * The `updateLaboratory` function updates a laboratory entity in the repository based on the

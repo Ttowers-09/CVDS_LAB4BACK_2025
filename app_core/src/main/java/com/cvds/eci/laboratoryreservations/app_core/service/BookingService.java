@@ -1,11 +1,7 @@
 package com.cvds.eci.laboratoryreservations.app_core.service;
 
 
-import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
-
-import javax.management.RuntimeErrorException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,19 +11,21 @@ import com.cvds.eci.laboratoryreservations.app_core.repository.BookingRepository
 
 @Service
 public class BookingService {
+
     @Autowired
     private BookingRepository bookingRepository;
 
-    
-
-    public BookingService(BookingRepository bookingRepository) {
-        this.bookingRepository = bookingRepository;
-    }
-
+    @Autowired
+    private UserService userService;
 
     public List<Booking> getAllBookings() {
-        return bookingRepository.findAll();
+        List<Booking> list = bookingRepository.findAll();
+        if (list.isEmpty()){
+            throw new RuntimeException("The list is empty");
+        }
+        return list;
     }
+
 
 
     /**
@@ -46,12 +44,24 @@ public class BookingService {
         if (!conflictingBookings.isEmpty()) {
             throw new RuntimeException("Reservation already exists during this time slot.");
         }
-    
         return bookingRepository.save(booking);
     }
     
 
-    public void deleteBooking(String id) {
+    public String deleteBooking(String id) {
+        Booking bookingSearch = bookingRepository.findById(id).orElse(null);
+        if(bookingSearch == null){
+            throw new RuntimeException("No Existe la reserva a eliminar");
+        }
         bookingRepository.deleteById(id);
+        return id;
+    }
+
+    public Booking findById(String id){
+        Booking bookingSearch = bookingRepository.findById(id).orElse(null);
+        if(bookingSearch == null){
+            throw new RuntimeException("No Existe la reserva");
+        }
+        return bookingSearch;
     }
 }

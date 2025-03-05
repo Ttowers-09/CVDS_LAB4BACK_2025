@@ -8,7 +8,6 @@ public class Laboratory {
     
     @Id
     private String id;
-    
 
 	private String name;
     private String location;
@@ -16,6 +15,7 @@ public class Laboratory {
     private boolean available;
 
 	
+
 
 	public Laboratory(String name, String location,int capacity,boolean available) {
         this.name = name;
