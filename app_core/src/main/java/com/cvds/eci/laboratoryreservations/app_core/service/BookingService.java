@@ -37,9 +37,10 @@ public class BookingService {
      * @return The `addBooking` method returns a `Booking` object.
      */
     public Booking addBooking(Booking booking) {
-        List<Booking> conflictingBookings = bookingRepository.findByUserIdAndLabIdAndInitHourLessThanAndFinalHourGreaterThan(
-            booking.getUser().getId(),booking.getLab().getId(), booking.getFinalHour(), booking.getInitHour()
+        List<Booking> conflictingBookings = bookingRepository.findByLabIdAndInitHourLessThanAndFinalHourGreaterThan(
+            booking.getLab().getId(), booking.getFinalHour(), booking.getInitHour()
         );
+
     
         if (!conflictingBookings.isEmpty()) {
             throw new RuntimeException("Reservation already exists during this time slot.");

@@ -8,6 +8,12 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "bookings")
 public class Booking {
+    // The `@Id` annotation in Spring Data MongoDB is used to mark a field as the primary identifier of
+    // a document in a MongoDB collection. In the context of the `Booking` class, the `@Id` annotation
+    // is applied to the `id` field, indicating that this field serves as the unique identifier for
+    // each `Booking` object when stored in the MongoDB database. This annotation tells the Spring Data
+    // MongoDB framework that the `id` field should be used as the primary key for identifying and
+    // retrieving `Booking` objects.
     @Id
     private String id;
 
@@ -19,15 +25,17 @@ public class Booking {
     
     private LocalDateTime finalHour;
 
-    @DBRef
-    private User user;
-
+    // The `@DBRef` annotation in Spring Data MongoDB is used to establish a reference between two
+    // documents in different collections. In the context of the `Booking` class, the `@DBRef`
+    // annotation is used to create a reference to a `Laboratory` object. This allows you to establish
+    // a relationship between a booking and a laboratory without embedding the laboratory document
+    // within the booking document. When you retrieve a `Booking` object, the `@DBRef` annotation will
+    // automatically fetch the associated `Laboratory` object based on the reference.
     @DBRef 
     private Laboratory lab;
 
     
-    public Booking(User user, Laboratory lab, LocalDateTime date, LocalDateTime initHour, LocalDateTime finalHour, String description) {
-        this.user = user;
+    public Booking( Laboratory lab, LocalDateTime date, LocalDateTime initHour, LocalDateTime finalHour, String description) {
         this.lab = lab;
         this.date = date;
         this.initHour = initHour;
@@ -78,11 +86,6 @@ public class Booking {
 
     public void setFinalHour(LocalDateTime finalHour) {
         this.finalHour = finalHour;
-    }
-
-
-    public User getUser() {
-        return user;
     }
 
 
