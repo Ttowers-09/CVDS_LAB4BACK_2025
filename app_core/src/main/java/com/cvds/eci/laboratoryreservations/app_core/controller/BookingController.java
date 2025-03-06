@@ -56,8 +56,8 @@ public class BookingController {
     @PostMapping
     public ResponseEntity<?> addBooking(@RequestBody Booking booking) { // @RequestBody Convierte automáticamente el JSON del cuerpo de la petición en un objeto Java.
         try{
-            bookingService.addBooking(booking); // Guarda y obtiene el ID
-            return ResponseEntity.status(201).body(Collections.singletonMap("response", "Booking Insert OK"));
+            Booking savedBooking = bookingService.addBooking(booking); // Guarda y obtiene el ID
+            return ResponseEntity.status(201).body(savedBooking);
         }catch(RuntimeException e){
             return ResponseEntity.status(500).body(Collections.singletonMap("error", e));
         }

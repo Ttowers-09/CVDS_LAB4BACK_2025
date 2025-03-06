@@ -62,7 +62,7 @@ public class LaboratoryController {
             labService.addLaboratory(laboratory); // Guarda y obtiene el ID
             return ResponseEntity.status(201).body(Collections.singletonMap("response", " Laboratory Insert OK"));
         } catch (Exception e) {
-            return ResponseEntity.status(500).body(Collections.singletonMap("error", "El laboratorio con nombre " + laboratory.getName() + " ya existe" ));
+            return ResponseEntity.status(500).body(Collections.singletonMap("error", e ));
         }
         
 

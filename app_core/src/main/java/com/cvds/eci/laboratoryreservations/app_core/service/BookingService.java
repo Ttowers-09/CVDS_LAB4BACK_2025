@@ -7,7 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cvds.eci.laboratoryreservations.app_core.model.Booking;
+import com.cvds.eci.laboratoryreservations.app_core.model.Laboratory;
 import com.cvds.eci.laboratoryreservations.app_core.repository.BookingRepository;
+import com.cvds.eci.laboratoryreservations.app_core.repository.LaboratoryRepository;
 
 @Service
 public class BookingService {
@@ -15,9 +17,11 @@ public class BookingService {
     @Autowired
     private BookingRepository bookingRepository;
 
-    @Autowired
+    
     private UserService userService;
 
+    @Autowired
+    private LaboratoryRepository laboratoryRepository;
     public List<Booking> getAllBookings() {
         List<Booking> list = bookingRepository.findAll();
         if (list.isEmpty()){
@@ -37,16 +41,25 @@ public class BookingService {
      * @return The `addBooking` method returns a `Booking` object.
      */
     public Booking addBooking(Booking booking) {
-        List<Booking> conflictingBookings = bookingRepository.findByLabIdAndInitHourLessThanAndFinalHourGreaterThan(
-            booking.getLab().getId(), booking.getFinalHour(), booking.getInitHour()
+        Laboratory lab = laboratoryRepository.findByName(booking.getLabName());
+        
+        if (lab == null) {
+            throw new RuntimeException("Laboratory not founded.");
+        }
+
+        List<Booking> conflictBookings = bookingRepository.findBylabNameAndInitHourLessThanAndFinalHourGreaterThan(
+            lab.getName(),
+            booking.getFinalHour(), 
+            booking.getInitHour()
         );
 
-    
-        if (!conflictingBookings.isEmpty()) {
-            throw new RuntimeException("Reservation already exists during this time slot.");
+        if (!conflictBookings.isEmpty()) {
+            throw new RuntimeException("There's a laboratory booked between that schedule already.");
         }
+
         return bookingRepository.save(booking);
     }
+
     
 
     public String deleteBooking(String id) {

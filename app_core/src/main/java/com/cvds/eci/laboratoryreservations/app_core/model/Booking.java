@@ -1,6 +1,9 @@
 package com.cvds.eci.laboratoryreservations.app_core.model;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -18,11 +21,16 @@ public class Booking {
     private String id;
 
 
-    private LocalDateTime date;
+   
     private String description;
 
+     // 📌 Devuelve solo la fecha1970-01-01T12:00:00Z"
+    private LocalDateTime date;
+
+     // 📌 Devuelve solo la hora
     private LocalDateTime initHour;
-    
+
+
     private LocalDateTime finalHour;
 
     // The `@DBRef` annotation in Spring Data MongoDB is used to establish a reference between two
@@ -31,16 +39,20 @@ public class Booking {
     // a relationship between a booking and a laboratory without embedding the laboratory document
     // within the booking document. When you retrieve a `Booking` object, the `@DBRef` annotation will
     // automatically fetch the associated `Laboratory` object based on the reference.
-    @DBRef 
-    private Laboratory lab;
+    //@DBRef 
+    //private Laboratory lab;
+
+    private String labName;
 
     
-    public Booking( Laboratory lab, LocalDateTime date, LocalDateTime initHour, LocalDateTime finalHour, String description) {
-        this.lab = lab;
+    public Booking( String labName, LocalDateTime date, LocalDateTime initHour, LocalDateTime finalHour, String description) {
+        this.labName = labName;
         this.date = date;
         this.initHour = initHour;
         this.finalHour = finalHour;
         this.description = description;
+        
+
     }
 
 
@@ -52,7 +64,13 @@ public class Booking {
         this.id = id;
     }
 
+    public void setLabName(String labName){
+        this.labName = labName;
+    }
 
+    public String getLabName(){
+        return labName;
+    }
 
     public LocalDateTime getDate() {
         return date;
@@ -87,19 +105,6 @@ public class Booking {
     public void setFinalHour(LocalDateTime finalHour) {
         this.finalHour = finalHour;
     }
-
-
-    public Laboratory getLab() {
-        return lab;
-    }
-
-
-
-    
-    
-    
-
-
     
 }
 

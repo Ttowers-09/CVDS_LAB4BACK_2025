@@ -35,16 +35,11 @@ public class LaboratoryService {
         return list;
     }
     
-    /**
-     * The function adds a laboratory to the lab repository by saving it.
-     * 
-     * @param laboratory The `addLaboratory` method takes a `Laboratory` object as a parameter and
-     * saves it using the `labRepository`.
-     */
+  
     public Laboratory addLaboratory(Laboratory laboratory) {
         Laboratory existingLab = labRepository.findByName(laboratory.getName());
         if (existingLab != null) {
-            throw new RuntimeException("El laboratorio con nombre " + laboratory.getName() + " ya existe.");
+            throw new RuntimeException("Laboratory " + laboratory.getName() + " exists already.");
         }
         return labRepository.save(laboratory);
     }

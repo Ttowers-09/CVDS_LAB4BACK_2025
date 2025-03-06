@@ -22,7 +22,7 @@ public interface BookingRepository extends MongoRepository<Booking, String> {
     * initial hour less than the provided finalHour and a final hour greater than the provided
     * initHour.
     */
-    List<Booking> findByLabIdAndInitHourLessThanAndFinalHourGreaterThan(
-        String labId, LocalDateTime finalHour, LocalDateTime initHour
+    List<Booking> findBylabNameAndInitHourLessThanAndFinalHourGreaterThan(
+        String labName, LocalDateTime finalHour, LocalDateTime initHour
     );
 }
