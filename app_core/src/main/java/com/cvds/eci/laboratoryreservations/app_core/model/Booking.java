@@ -20,14 +20,13 @@ public class Booking {
     @Id
     private String id;
 
-
    
     private String description;
 
-     // 📌 Devuelve solo la fecha1970-01-01T12:00:00Z"
+     // Devuelve solo la fecha1970-01-01T12:00:00Z"
     private LocalDateTime date;
 
-     // 📌 Devuelve solo la hora
+     // Devuelve solo la hora
     private LocalDateTime initHour;
 
 
@@ -44,15 +43,16 @@ public class Booking {
 
     private String labName;
 
+    private int priority;
+
     
-    public Booking( String labName, LocalDateTime date, LocalDateTime initHour, LocalDateTime finalHour, String description) {
+    public Booking (String labName, LocalDateTime date, LocalDateTime initHour, LocalDateTime finalHour, String description, int priority) {
         this.labName = labName;
         this.date = date;
         this.initHour = initHour;
         this.finalHour = finalHour;
         this.description = description;
-        
-
+        this.priority = priority;
     }
 
 
