@@ -25,7 +25,7 @@ public class BookingService {
     public List<Booking> getAllBookings() {
         List<Booking> list = bookingRepository.findAll();
         if (list.isEmpty()){
-            throw new RuntimeException("The list is empty");
+            throw new RuntimeException("The booking's list is empty");
         }
         return list;
     }
