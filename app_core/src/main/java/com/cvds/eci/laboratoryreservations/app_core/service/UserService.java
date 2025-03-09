@@ -16,20 +16,45 @@ public class UserService {
     private UserRepository userRepository;
 
     public List<User> getAllUsers() {
-        return userRepository.findAll();
+        List<User> list = userRepository.findAll();
+        if (list.isEmpty()){
+            throw new RuntimeException("The user's list is empty");
+        }
+        return list;
     }
     
-    public Optional<User> getUserById(String id) {
-        return userRepository.findById(id);
+    public User getUserById(String id) {
+        User user = userRepository.findById(id).orElse(null);
+        if (user == null){
+            throw new RuntimeException("No se encuentra el usuario con id " + id);
+        }
+        return user;
+    }
+
+    public User getUserByName(String name){
+        User user = userRepository.findByName(name);
+        if (user == null){
+            throw new RuntimeException("No se encuentra el usuario con nombre " + name );
+        }
+        return user;
     }
 
     public User addUser(User user) {
+        User existingUser = userRepository.findByName(user.getName());
+        if (existingUser != null){
+            throw new RuntimeException("User " + user.getName() + " exists already.");
+        }
         return userRepository.save(user);
     }
 
 
-    public void deletUser(String idUser){
-        userRepository.deleteById(idUser);
+    public String deletUser(String id){
+        User userSearch = userRepository.findById(id).orElse(null);
+        if(userSearch == null){
+            throw new RuntimeException("No Existe el usuario a eliminar");
+        }
+        userRepository.deleteById(id);
+        return id;
     }
 
 

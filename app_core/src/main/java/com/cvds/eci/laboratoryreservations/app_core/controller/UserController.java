@@ -1,5 +1,6 @@
 package com.cvds.eci.laboratoryreservations.app_core.controller;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,7 +20,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/users")
 public class UserController {
     private final UserService userService;
 
@@ -32,10 +33,15 @@ public class UserController {
      * 
      * @return A list of Users objects is being returned in the ResponseEntity body.
      */
-    @GetMapping("/users")
+    @GetMapping
     public ResponseEntity<?> getUsers(){
-        List<User> Users = userService.getAllUsers();
-        return ResponseEntity.ok(Users);
+        try{
+            List<User> users = userService.getAllUsers();
+            return ResponseEntity.ok(users);
+        }catch(RuntimeException e){
+            return ResponseEntity.status(500).body(Collections.singletonMap("error", e));
+        }
+        
 
     }
 
@@ -49,24 +55,54 @@ public class UserController {
      * @return A ResponseEntity object with a status code of 201 (Created) and a body containing a Map
      * with a "response" key and the value "User Insert OK".
      */
-    @PostMapping("/users")
+    @PostMapping
     public ResponseEntity<?> addUser(@RequestBody User user) { // @RequestBody Convierte automáticamente el JSON del cuerpo de la petición en un objeto Java.
-        userService.addUser(user); // Guarda y obtiene el ID
-
-        Map<String, String> response = new HashMap<String, String>();
-        response.put("response", "User Insert OK");
-        return ResponseEntity.status(201).body(response);
+        try{
+            User saveUser = userService.addUser(user); // Guarda y obtiene el ID
+            return ResponseEntity.status(201).body(saveUser);
+        }catch(RuntimeException e){
+            return ResponseEntity.status(500).body(Collections.singletonMap("error", e));
+        }
+        
 
     }
 
-    @DeleteMapping("/users/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteUser(@PathVariable String id){
-        userService.deletUser(id);
-        Map<String, String> response = new HashMap<String, String>();
-        response.put("response", "User: " + id  + " Deleted OK");
-        return ResponseEntity.ok(response);
+        try{
+            String userDelete = userService.deletUser(id);
+            return ResponseEntity.status(200).body(Collections.singletonMap("response", "User: " + userDelete  + " Delete OK"));
+        }catch(RuntimeException e){
+            return ResponseEntity.status(500).body(Collections.singletonMap("error", e));
+        }
+        
     }
 
-    
+
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getUserById(@PathVariable String id){
+        try{
+            User userSearch = userService.getUserById(id);
+            return ResponseEntity.status(200).body(userSearch);
+        }catch(RuntimeException e){
+            return ResponseEntity.status(500).body(Collections.singletonMap("error", e));
+        }
+        
+
+    }
+
+    @GetMapping("/{name}")
+    public ResponseEntity<?> getUserByName(@PathVariable String name){
+        try{
+            User userSearch = userService.getUserByName(name);
+            return ResponseEntity.status(200).body(userSearch);
+        }catch(RuntimeException e){
+            return ResponseEntity.status(500).body(Collections.singletonMap("error", e));
+        }
+        
+
+    }
+
+
     
 }
