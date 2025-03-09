@@ -18,7 +18,6 @@ public class BookingService {
     private BookingRepository bookingRepository;
 
     
-    private UserService userService;
 
     @Autowired
     private LaboratoryRepository laboratoryRepository;

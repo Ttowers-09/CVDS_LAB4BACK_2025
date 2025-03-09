@@ -18,6 +18,7 @@ import com.cvds.eci.laboratoryreservations.app_core.service.BookingService;
 
 @RestController
 @RequestMapping("/api/bookings")
+//@CrossOrigin(origins = "http://localhost:5173")
 public class BookingController {
 
     private final BookingService bookingService;
