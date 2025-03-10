@@ -60,7 +60,7 @@ public class BookingController {
             Booking savedBooking = bookingService.addBooking(booking); // Guarda y obtiene el ID
             return ResponseEntity.status(201).body(savedBooking);
         }catch(RuntimeException e){
-            return ResponseEntity.status(500).body(Collections.singletonMap("error", e));
+            return ResponseEntity.status(500).body(Collections.singletonMap("error", e.getMessage()));
         }
     }
 
@@ -70,7 +70,7 @@ public class BookingController {
             String bookingForDelete = bookingService.deleteBooking(id);
             return ResponseEntity.status(200).body(Collections.singletonMap("response", "booking: " + bookingForDelete  + " Delete OK"));
         } catch(RuntimeException e ){
-            return ResponseEntity.status(500).body(Collections.singletonMap("error", e));
+            return ResponseEntity.status(500).body(Collections.singletonMap("error", e.getMessage()));
         }
     }
 
@@ -81,7 +81,7 @@ public class BookingController {
             Booking bukingSearch = bookingService.findById(id);
             return ResponseEntity.status(200).body(bukingSearch);
         }catch(RuntimeException e){
-            return ResponseEntity.status(500).body(Collections.singletonMap("error", e));
+            return ResponseEntity.status(500).body(Collections.singletonMap("error", e.getMessage()));
         }
         
 
