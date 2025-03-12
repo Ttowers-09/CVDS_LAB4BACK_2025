@@ -46,11 +46,14 @@ public class BookingService {
             throw new RuntimeException("Laboratory not founded.");
         }
 
-        List<Booking> conflictBookings = bookingRepository.findBylabNameAndInitHourLessThanAndFinalHourGreaterThan(
+        List<Booking> conflictBookings = bookingRepository.findByLabNameAndDateAndInitHourLessThanAndFinalHourGreaterThan(
             lab.getName(),
-            booking.getFinalHour(), 
+            booking.getDate(),
+            booking.getFinalHour(),
             booking.getInitHour()
+            
         );
+
 
         if (!conflictBookings.isEmpty()) {
             throw new RuntimeException("There's a laboratory booked between that schedule already.");
@@ -64,7 +67,7 @@ public class BookingService {
     public String deleteBooking(String id) {
         Booking bookingSearch = bookingRepository.findById(id).orElse(null);
         if(bookingSearch == null){
-            throw new RuntimeException("No Existe la reserva a eliminar");
+            throw new RuntimeException("The booking " + id + " does not exist");
         }
         bookingRepository.deleteById(id);
         return id;
@@ -73,8 +76,16 @@ public class BookingService {
     public Booking findById(String id){
         Booking bookingSearch = bookingRepository.findById(id).orElse(null);
         if(bookingSearch == null){
-            throw new RuntimeException("No Existe la reserva");
+            throw new RuntimeException("The booking " + id + " does not exist");
         }
         return bookingSearch;
     }
+
+
+
+    public BookingRepository getBookingRepository() {
+        return bookingRepository;
+    }
+
+    
 }

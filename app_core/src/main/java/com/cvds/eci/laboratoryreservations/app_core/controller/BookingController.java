@@ -4,7 +4,6 @@ import java.util.Collections;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,7 +17,8 @@ import com.cvds.eci.laboratoryreservations.app_core.service.BookingService;
 
 @RestController
 @RequestMapping("/api/bookings")
-//@CrossOrigin(origins = "http://localhost:5173")
+//@CrossOrigin(origins = "http://localhost:5173"
+//prueba
 public class BookingController {
 
     private final BookingService bookingService;
@@ -60,7 +60,7 @@ public class BookingController {
             Booking savedBooking = bookingService.addBooking(booking); // Guarda y obtiene el ID
             return ResponseEntity.status(201).body(savedBooking);
         }catch(RuntimeException e){
-            return ResponseEntity.status(500).body(Collections.singletonMap("error", e));
+            return ResponseEntity.status(500).body(Collections.singletonMap("error", e.getMessage()));
         }
     }
 
@@ -70,7 +70,7 @@ public class BookingController {
             String bookingForDelete = bookingService.deleteBooking(id);
             return ResponseEntity.status(200).body(Collections.singletonMap("response", "booking: " + bookingForDelete  + " Delete OK"));
         } catch(RuntimeException e ){
-            return ResponseEntity.status(500).body(Collections.singletonMap("error", e));
+            return ResponseEntity.status(500).body(Collections.singletonMap("error", e.getMessage()));
         }
     }
 
@@ -81,7 +81,7 @@ public class BookingController {
             Booking bukingSearch = bookingService.findById(id);
             return ResponseEntity.status(200).body(bukingSearch);
         }catch(RuntimeException e){
-            return ResponseEntity.status(500).body(Collections.singletonMap("error", e));
+            return ResponseEntity.status(500).body(Collections.singletonMap("error", e.getMessage()));
         }
         
 

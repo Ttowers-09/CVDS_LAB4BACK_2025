@@ -1,11 +1,9 @@
 package com.cvds.eci.laboratoryreservations.app_core.model;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 
@@ -23,36 +21,26 @@ public class Booking {
    
     private String description;
 
-     // Devuelve solo la fecha1970-01-01T12:00:00Z"
-    private LocalDateTime date;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy", locale = "es-CO", timezone = "America/Bogota")
+    private LocalDate date;
 
-     // Devuelve solo la hora
-    private LocalDateTime initHour;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm", locale = "es-CO", timezone = "America/Bogota")
+    private LocalTime initHour;
 
 
-    private LocalDateTime finalHour;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm", locale = "es-CO", timezone = "America/Bogota")
+    private LocalTime finalHour;
 
-    // The `@DBRef` annotation in Spring Data MongoDB is used to establish a reference between two
-    // documents in different collections. In the context of the `Booking` class, the `@DBRef`
-    // annotation is used to create a reference to a `Laboratory` object. This allows you to establish
-    // a relationship between a booking and a laboratory without embedding the laboratory document
-    // within the booking document. When you retrieve a `Booking` object, the `@DBRef` annotation will
-    // automatically fetch the associated `Laboratory` object based on the reference.
-    //@DBRef 
-    //private Laboratory lab;
 
     private String labName;
 
-    private int priority;
-
     
-    public Booking (String labName, LocalDateTime date, LocalDateTime initHour, LocalDateTime finalHour, String description, int priority) {
+    public Booking (String labName, LocalDate date, LocalTime initHour, LocalTime finalHour, String description) {
         this.labName = labName;
         this.date = date;
         this.initHour = initHour;
         this.finalHour = finalHour;
         this.description = description;
-        this.priority = priority;
     }
 
 
@@ -64,47 +52,55 @@ public class Booking {
         this.id = id;
     }
 
-    public void setLabName(String labName){
-        this.labName = labName;
-    }
-
     public String getLabName(){
         return labName;
     }
 
-    public LocalDateTime getDate() {
-        return date;
+    public void setLabName(String labName){
+        this.labName = labName;
     }
 
-    public void setDate(LocalDateTime date) {
-        this.date = date;
-    }
 
     public String getDescription() {
         return description;
     }
 
+
     public void setDescription(String description) {
         this.description = description;
     }
 
-    
 
-    public LocalDateTime getInitHour() {
+    public LocalDate getDate() {
+        return date;
+    }
+
+
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
+
+
+    public LocalTime getInitHour() {
         return initHour;
     }
 
-    public void setInitHour(LocalDateTime initHour) {
+
+    public void setInitHour(LocalTime initHour) {
         this.initHour = initHour;
     }
 
-    public LocalDateTime getFinalHour() {
+
+    public LocalTime getFinalHour() {
         return finalHour;
     }
 
-    public void setFinalHour(LocalDateTime finalHour) {
+
+    public void setFinalHour(LocalTime finalHour) {
         this.finalHour = finalHour;
     }
+
+
     
 }
 
