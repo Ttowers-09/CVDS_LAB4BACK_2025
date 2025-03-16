@@ -10,6 +10,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
@@ -48,7 +49,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(request -> request.anyRequest().authenticated())
 
                 // Enables a default login form provided by Spring Security.
-                .formLogin(Customizer.withDefaults())
+                //.formLogin(Customizer.withDefaults())
 
                 // Enables HTTP Basic authentication for clients that do not use the login form.
                 .httpBasic(Customizer.withDefaults())
@@ -70,7 +71,7 @@ public class SecurityConfig {
         DaoAuthenticationProvider daoProvider = new DaoAuthenticationProvider();
 
         // Defines the password encoding mechanism (NoOpPasswordEncoder is insecure and should only be used for testing).
-        daoProvider.setPasswordEncoder(NoOpPasswordEncoder.getInstance());
+        daoProvider.setPasswordEncoder(new BCryptPasswordEncoder(12));
 
         // Sets the service that provides user details.
         daoProvider.setUserDetailsService(userDetailsService);

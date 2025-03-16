@@ -1,9 +1,8 @@
 package com.cvds.eci.laboratoryreservations.app_core.service;
 
 import java.util.List;
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.cvds.eci.laboratoryreservations.app_core.model.User;
@@ -14,6 +13,8 @@ public class UserService {
 
     @Autowired
     private UserRepository userRepository;
+
+    private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(12); 
 
     public List<User> getAllUsers() {
         List<User> list = userRepository.findAll();
@@ -44,6 +45,7 @@ public class UserService {
         if (existingUser != null){
             throw new RuntimeException("User " + user.getName() + " exists already.");
         }
+        user.setPassword(encoder.encode(user.getPassword()));
         return userRepository.save(user);
     }
 
