@@ -70,7 +70,7 @@ public class UserController {
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteUser(@PathVariable String id){
         try{
-            String userDelete = userService.deletUser(id);
+            String userDelete = userService.deleteUser(id);
             return ResponseEntity.status(200).body(Collections.singletonMap("response", "User: " + userDelete  + " Delete OK"));
         }catch(RuntimeException e){
             return ResponseEntity.status(500).body(Collections.singletonMap("error", e));

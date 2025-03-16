@@ -1,7 +1,6 @@
 package com.cvds.eci.laboratoryreservations.app_core.repository;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 

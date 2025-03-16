@@ -39,7 +39,7 @@ public class BookingController {
             List<Booking> bookings = bookingService.getAllBookings();
             return ResponseEntity.ok(bookings);  
         }catch(RuntimeException e){
-            return ResponseEntity.status(500).body(Collections.singletonMap("error", e));
+            return ResponseEntity.status(500).body(Collections.singletonMap("error", e.getMessage()));
         }
         
     }

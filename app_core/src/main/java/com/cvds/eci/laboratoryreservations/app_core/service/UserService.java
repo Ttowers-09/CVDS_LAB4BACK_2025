@@ -26,7 +26,7 @@ public class UserService {
     public User getUserById(String id) {
         User user = userRepository.findById(id).orElse(null);
         if (user == null){
-            throw new RuntimeException("No se encuentra el usuario con id " + id);
+            throw new RuntimeException("The user with the id: " + id + " cannot be found");
         }
         return user;
     }
@@ -34,7 +34,7 @@ public class UserService {
     public User getUserByName(String name){
         User user = userRepository.findByName(name);
         if (user == null){
-            throw new RuntimeException("No se encuentra el usuario con nombre " + name );
+            throw new RuntimeException("The user  " + name + " cannot be found" );
         }
         return user;
     }
@@ -48,10 +48,10 @@ public class UserService {
     }
 
 
-    public String deletUser(String id){
+    public String deleteUser(String id){
         User userSearch = userRepository.findById(id).orElse(null);
         if(userSearch == null){
-            throw new RuntimeException("No Existe el usuario a eliminar");
+            throw new RuntimeException("The user does not exist");
         }
         userRepository.deleteById(id);
         return id;
