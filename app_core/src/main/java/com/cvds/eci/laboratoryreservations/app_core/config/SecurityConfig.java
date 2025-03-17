@@ -14,6 +14,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 /**
  * Security configuration for the application using Spring Security.
@@ -32,6 +33,8 @@ public class SecurityConfig {
     @Autowired
     private UserDetailsService userDetailsService;
 
+    @Autowired
+    private JwtFilter jwtFilter;
     /**
      * Configures the Spring Security filter chain to handle authentication and authorization.
      * 
@@ -62,6 +65,7 @@ public class SecurityConfig {
                 // Configures session management as STATELESS, meaning the server
                 // will not store user session information. This improves security in RESTful APIs.
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
 
@@ -84,8 +88,18 @@ public class SecurityConfig {
         return daoProvider;
     }
 
-    @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception{
-        return config.getAuthenticationManager();
-    }
+/**
+ * Creates and configures an AuthenticationManager using Spring Security's authentication configuration.
+ * The AuthenticationManager is a central interface in Spring Security for authenticating users.
+ *
+ * @param config A pre-built AuthenticationConfiguration object provided by Spring Security which
+ *               allows customization and retrieval of authentication-related settings.
+ * @return An AuthenticationManager that is configured to handle the authentication process.
+ * @throws Exception If there is an issue with obtaining the AuthenticationManager from the configuration.
+ */
+@Bean
+public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
+    return config.getAuthenticationManager();
+}
+
 }
