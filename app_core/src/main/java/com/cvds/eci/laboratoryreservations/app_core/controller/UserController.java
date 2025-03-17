@@ -100,6 +100,12 @@ public class UserController {
 
     }
 
+    @PostMapping("/login")
+    public String postMethodName(@RequestBody User user) {
+        return userService.verify(user);
+    }
+    
+
 
     
 }

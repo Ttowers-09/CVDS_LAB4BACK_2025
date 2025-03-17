@@ -2,6 +2,9 @@ package com.cvds.eci.laboratoryreservations.app_core.service;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +16,9 @@ public class UserService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private AuthenticationManager authManager;
 
     private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(12); 
 
@@ -59,5 +65,15 @@ public class UserService {
         return id;
     }
 
+    public String verify(User user) {
+        Authentication authentication = 
+        authManager.authenticate(new UsernamePasswordAuthenticationToken(user.getName(), user.getPassword()));
+
+       if(!authentication.isAuthenticated()){
+        return "Failed";
+       }
+
+       return "Success";
+    }
 
 }
