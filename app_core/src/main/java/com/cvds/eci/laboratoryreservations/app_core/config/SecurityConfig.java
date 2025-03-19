@@ -52,7 +52,7 @@ public class SecurityConfig {
 
                 // Requires authentication for all requests to the server.
                 .authorizeHttpRequests(request -> request
-                .requestMatchers("login")
+                .requestMatchers("/login")
                 .permitAll()
                 .anyRequest().authenticated())
 
