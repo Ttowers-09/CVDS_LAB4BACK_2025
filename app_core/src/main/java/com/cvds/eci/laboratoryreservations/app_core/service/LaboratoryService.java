@@ -1,6 +1,5 @@
 package com.cvds.eci.laboratoryreservations.app_core.service;
 
-
 import java.util.List;
 import java.util.Optional;
 
@@ -9,33 +8,38 @@ import org.springframework.stereotype.Service;
 
 import com.cvds.eci.laboratoryreservations.app_core.model.Laboratory;
 import com.cvds.eci.laboratoryreservations.app_core.repository.LaboratoryRepository;
+
+/**
+ * Servicio para la gestión de laboratorios en la aplicación.
+ * Proporciona métodos para obtener, agregar, eliminar y actualizar laboratorios.
+ */
 @Service
 public class LaboratoryService {
     
-    // `@Autowired` is an annotation in Spring Framework that marks a constructor, field, setter
-    // method, or configuration method to be autowired by Spring's dependency injection capabilities.
-    // In the context of the code snippet you provided, `@Autowired` is used to inject an instance of
-    // `LaboratoryRepository` into the `LaboratoryService` class, allowing the service to interact with
-    // the repository without explicitly creating an instance of it.
     @Autowired
     private LaboratoryRepository labRepository;
 
-
-   /**
-    * The function `getLaboratories()` returns a list of all laboratories from the labRepository.
-    * 
-    * @return A list of Laboratory objects is being returned.
-    */
+    /**
+     * Obtiene la lista de todos los laboratorios registrados en el sistema.
+     * 
+     * @return Lista de laboratorios disponibles.
+     * @throws RuntimeException Si no hay laboratorios en el sistema.
+     */
     public List<Laboratory> getLaboratories() {
-
         List<Laboratory> list = labRepository.findAll();
-        if (list.isEmpty()){
+        if (list.isEmpty()) {
             throw new RuntimeException("The list is empty");
         }
         return list;
     }
     
-  
+    /**
+     * Agrega un nuevo laboratorio al sistema.
+     * 
+     * @param laboratory Laboratorio a agregar.
+     * @return El laboratorio guardado.
+     * @throws RuntimeException Si el laboratorio ya existe.
+     */
     public Laboratory addLaboratory(Laboratory laboratory) {
         Laboratory existingLab = labRepository.findByName(laboratory.getName());
         if (existingLab != null) {
@@ -44,38 +48,28 @@ public class LaboratoryService {
         return labRepository.save(laboratory);
     }
     
-
     /**
-     * The `deleteLaboratory` function deletes a laboratory record from the repository based on the
-     * provided laboratory ID.
+     * Elimina un laboratorio del sistema según su identificador.
      * 
-     * @param idLaboratory The `idLaboratory` parameter is a unique identifier that is used to specify
-     * which laboratory record should be deleted from the database.
+     * @param id Identificador del laboratorio a eliminar.
+     * @throws RuntimeException Si el laboratorio no existe.
      */
-    public void deleteLaboratory(String id){
+    public void deleteLaboratory(String id) {
         Laboratory lab = labRepository.findById(id).orElse(null);
-        if(lab == null){
+        if (lab == null) {
             throw new RuntimeException("No Existe el laboratorio a eliminar");
         }
         labRepository.deleteById(id);
     }
 
- 
-
     /**
-     * The `updateLaboratory` function updates a laboratory entity in the repository based on the
-     * provided ID with the information from the updatedLab object.
+     * Actualiza la información de un laboratorio existente en el sistema.
      * 
-     * @param idLaboratory The `idLaboratory` parameter is the unique identifier of the laboratory that
-     * you want to update. It is used to retrieve the specific laboratory entity from the repository
-     * for updating.
-     * @param updatedLab `updatedLab` is an object of type `Laboratory` that contains the updated
-     * information for a laboratory entity. It may include the new name, location, and capacity for the
-     * laboratory that needs to be updated in the repository.
+     * @param idLaboratory Identificador del laboratorio a actualizar.
+     * @param updatedLab Objeto con los datos actualizados.
+     * @throws RuntimeException Si el laboratorio no se encuentra.
      */
-    public void updateLaboratory(String idLaboratory,Laboratory updatedLab) {
-        // The line `Optional<Laboratory> labOptional = labRepository.findById(idLaboratory);` is
-        // retrieving a laboratory entity from the repository based on the provided `idLaboratory`.
+    public void updateLaboratory(String idLaboratory, Laboratory updatedLab) {
         Optional<Laboratory> labOptional = labRepository.findById(idLaboratory);
 
         if (labOptional.isPresent()) {
@@ -89,5 +83,4 @@ public class LaboratoryService {
             throw new RuntimeException("Laboratory with ID " + idLaboratory + " not found");
         }
     }
-    
 }
