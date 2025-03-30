@@ -15,6 +15,8 @@ import com.cvds.eci.laboratoryreservations.app_core.service.UserService;
 
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.PutMapping;
+
 
 @RestController
 @RequestMapping("/api/users")
@@ -114,5 +116,16 @@ public class UserController {
     @PostMapping("/login")
     public String login(@RequestBody User user) {
         return userService.verify(user);
+    }
+
+
+    @PutMapping("/{id}")
+    public ResponseEntity<?> putMethodName(@PathVariable String id, @RequestBody User user) {
+        try {
+            userService.updateUser(id, user);
+            return ResponseEntity.ok().body("User updated OK");
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body(Collections.singletonMap("error", e.getMessage()));
+        }
     }
 }

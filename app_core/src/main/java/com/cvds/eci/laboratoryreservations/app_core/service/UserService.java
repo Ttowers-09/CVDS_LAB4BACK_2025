@@ -1,6 +1,7 @@
 package com.cvds.eci.laboratoryreservations.app_core.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -88,16 +89,16 @@ public class UserService implements UserDetailsService {
      * @throws RuntimeException If the user already exists.
      */
     public User addUser(User user) {
-        User existingUser = userRepository.findByName(user.getName());
+        User existingUser = userRepository.findByEmail(user.getEmail());
         if (existingUser != null){
-            throw new RuntimeException("User " + user.getName() + " exists already.");
+            throw new RuntimeException("The mail " + user.getEmail() + "already exists .");
         }
         user.setPassword(encoder.encode(user.getPassword()));
         return userRepository.save(user);
     }
 
     /**
-     * Deletes a user by their ID.
+     * Deletes a user by ID.
      * 
      * @param id The ID of the user to be deleted.
      * @return The ID of the deleted user.
@@ -147,5 +148,18 @@ public class UserService implements UserDetailsService {
             throw new UsernameNotFoundException("User not found");
         }
         return new UsersDetails(user);
+    }
+
+    public void updateUser(String userid,User user){
+        Optional<User> userUpdate = userRepository.findById(userid);
+
+        if (userUpdate.isPresent()) {
+            User newUser = userUpdate.get();
+            if (user.getName() != null) newUser.setName(user.getName());
+            if (user.getEmail() != null) newUser.setEmail(user.getEmail());
+            userRepository.save(newUser);
+        } else {
+            throw new RuntimeException("User with ID " + userid + " not found");
+        }
     }
 }

@@ -111,8 +111,6 @@ public class BookingService {
         }
 
         Booking booking = bookingRepository.findByUserId(user.getId()).orElse(null);
-        
-        
 
         return booking;
     }
