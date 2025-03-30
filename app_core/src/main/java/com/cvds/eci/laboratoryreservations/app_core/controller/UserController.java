@@ -16,7 +16,6 @@ import com.cvds.eci.laboratoryreservations.app_core.service.UserService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-
 @RestController
 @RequestMapping("/api/users")
 @CrossOrigin(origins = "http://localhost:300")
@@ -28,86 +27,92 @@ public class UserController {
     }
 
     /**
-     * This Java function returns a list of Users as a ResponseEntity.
-     * 
-     * @return A list of Users objects is being returned in the ResponseEntity body.
+     * Obtiene la lista de todos los usuarios registrados.
+     *
+     * @return ResponseEntity con la lista de usuarios en caso de éxito o un mensaje de error en caso de fallo.
      */
     @GetMapping("/get-users")
-    public ResponseEntity<?> getUsers(){
-        try{
+    public ResponseEntity<?> getUsers() {
+        try {
             List<User> users = userService.getAllUsers();
             return ResponseEntity.ok(users);
-        }catch(RuntimeException e){
+        } catch (RuntimeException e) {
             return ResponseEntity.status(500).body(Collections.singletonMap("error", e));
         }
-        
-
     }
 
     /**
-     * This Java function adds a User entity to the system and returns a response indicating
-     * successful insertion.
-     * 
-     * @param User The `addUser` method in the code snippet is a POST mapping that adds a
-     * new User to the system. The method takes a `User` object as a request body and then
-     * calls the `addUser` method from the `labService` to add the User to the system
-     * @return A ResponseEntity object with a status code of 201 (Created) and a body containing a Map
-     * with a "response" key and the value "User Insert OK".
+     * Agrega un nuevo usuario al sistema.
+     *
+     * @param user Objeto User que se desea agregar, recibido en el cuerpo de la solicitud.
+     * @return ResponseEntity con el usuario guardado o un mensaje de error en caso de fallo.
      */
     @PostMapping("/add/user")
-    public ResponseEntity<?> addUser(@RequestBody User user) { // @RequestBody Convierte automáticamente el JSON del cuerpo de la petición en un objeto Java.
-        try{
-            User saveUser = userService.addUser(user); // Guarda y obtiene el ID
+    public ResponseEntity<?> addUser(@RequestBody User user) {
+        try {
+            User saveUser = userService.addUser(user);
             return ResponseEntity.status(201).body(saveUser);
-        }catch(RuntimeException e){
+        } catch (RuntimeException e) {
             return ResponseEntity.status(500).body(Collections.singletonMap("error", e.getMessage()));
         }
-        
-
     }
 
+    /**
+     * Elimina un usuario específico por su identificador.
+     *
+     * @param id Identificador único del usuario que se desea eliminar.
+     * @return ResponseEntity con un mensaje de confirmación o un mensaje de error en caso de fallo.
+     */
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteUser(@PathVariable String id){
-        try{
+    public ResponseEntity<?> deleteUser(@PathVariable String id) {
+        try {
             String userDelete = userService.deleteUser(id);
-            return ResponseEntity.status(200).body(Collections.singletonMap("response", "User: " + userDelete  + " Delete OK"));
-        }catch(RuntimeException e){
+            return ResponseEntity.status(200).body(Collections.singletonMap("response", "User: " + userDelete + " Delete OK"));
+        } catch (RuntimeException e) {
             return ResponseEntity.status(500).body(Collections.singletonMap("error", e));
         }
-        
     }
 
-
+    /**
+     * Obtiene un usuario por su identificador único.
+     *
+     * @param id Identificador único del usuario.
+     * @return ResponseEntity con el usuario encontrado o un mensaje de error en caso de fallo.
+     */
     @GetMapping("/{id}")
-    public ResponseEntity<?> getUserById(@PathVariable String id){
-        try{
+    public ResponseEntity<?> getUserById(@PathVariable String id) {
+        try {
             User userSearch = userService.getUserById(id);
             return ResponseEntity.status(200).body(userSearch);
-        }catch(RuntimeException e){
+        } catch (RuntimeException e) {
             return ResponseEntity.status(500).body(Collections.singletonMap("error", e.getMessage()));
         }
-        
-
     }
 
+    /**
+     * Obtiene un usuario por su nombre.
+     *
+     * @param name Nombre del usuario a buscar.
+     * @return ResponseEntity con el usuario encontrado o un mensaje de error en caso de fallo.
+     */
     @GetMapping("/get/{name}")
-    public ResponseEntity<?> getUserByName(@PathVariable String name){
-        try{
+    public ResponseEntity<?> getUserByName(@PathVariable String name) {
+        try {
             User userSearch = userService.getUserByName(name);
             return ResponseEntity.status(200).body(userSearch);
-        }catch(RuntimeException e){
+        } catch (RuntimeException e) {
             return ResponseEntity.status(500).body(Collections.singletonMap("error", e.getMessage()));
         }
-        
-
     }
 
+    /**
+     * Verifica las credenciales de un usuario en el sistema.
+     *
+     * @param user Objeto User con la información de inicio de sesión.
+     * @return String con la respuesta de verificación del usuario.
+     */
     @PostMapping("/login")
-    public String postMethodName(@RequestBody User user) {
+    public String verifyUser(@RequestBody User user) {
         return userService.verify(user);
     }
-    
-
-
-    
 }

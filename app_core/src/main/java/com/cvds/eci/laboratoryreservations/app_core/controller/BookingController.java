@@ -19,7 +19,6 @@ import com.cvds.eci.laboratoryreservations.app_core.service.BookingService;
 @RestController
 @RequestMapping("/api/bookings")
 @CrossOrigin(origins = "http://localhost:300")
-//prueba
 public class BookingController {
 
     private final BookingService bookingService;
@@ -28,64 +27,66 @@ public class BookingController {
         this.bookingService = bookingService;
     }
 
-    
     /**
-     * This Java function returns a list of bookings as a ResponseEntity.
+     * Obtiene la lista de todas las reservas disponibles.
      * 
-     * @return A list of bookings objects is being returned in the ResponseEntity body.
+     * @return ResponseEntity con la lista de reservas en caso de éxito o un mensaje de error en caso de fallo.
      */
     @GetMapping
-    public ResponseEntity<?> getBookings(){
-        try{
+    public ResponseEntity<?> getBookings() {
+        try {
             List<Booking> bookings = bookingService.getAllBookings();
-            return ResponseEntity.ok(bookings);  
-        }catch(RuntimeException e){
+            return ResponseEntity.ok(bookings);
+        } catch (RuntimeException e) {
             return ResponseEntity.status(500).body(Collections.singletonMap("error", e.getMessage()));
         }
-        
     }
 
     /**
-     * This Java function adds a booking entity to the system and returns a response indicating
-     * successful insertion.
-     * 
-     * @param booking The `addBooking` method in the code snippet is a POST mapping that adds a
-     * new booking to the system. The method takes a `Booking` object as a request body and then
-     * calls the `addBooking` method from the `labService` to add the booking to the system
-     * @return A ResponseEntity object with a status code of 201 (Created) and a body containing a Map
-     * with a "response" key and the value "booking Insert OK".
+     * Crea una nueva reserva en el sistema.
+     *
+     * @param booking Objeto Booking que se desea agregar, recibido en el cuerpo de la solicitud.
+     * @return ResponseEntity con la reserva creada en caso de éxito o un mensaje de error en caso de fallo.
      */
     @PostMapping
-    public ResponseEntity<?> addBooking(@RequestBody Booking booking) { // @RequestBody Convierte automáticamente el JSON del cuerpo de la petición en un objeto Java.
-        try{
-            Booking savedBooking = bookingService.addBooking(booking); // Guarda y obtiene el ID
+    public ResponseEntity<?> addBooking(@RequestBody Booking booking) {
+        try {
+            Booking savedBooking = bookingService.addBooking(booking);
             return ResponseEntity.status(201).body(savedBooking);
-        }catch(RuntimeException e){
+        } catch (RuntimeException e) {
             return ResponseEntity.status(500).body(Collections.singletonMap("error", e.getMessage()));
         }
     }
 
-   @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteBooking(@PathVariable String id){
-        try{
+    /**
+     * Elimina una reserva específica por su identificador.
+     *
+     * @param id Identificador único de la reserva que se desea eliminar.
+     * @return ResponseEntity con un mensaje de confirmación o un mensaje de error en caso de fallo.
+     */
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteBooking(@PathVariable String id) {
+        try {
             String bookingForDelete = bookingService.deleteBooking(id);
-            return ResponseEntity.status(200).body(Collections.singletonMap("response", "booking: " + bookingForDelete  + " Delete OK"));
-        } catch(RuntimeException e ){
+            return ResponseEntity.status(200).body(Collections.singletonMap("response", "booking: " + bookingForDelete + " Delete OK"));
+        } catch (RuntimeException e) {
             return ResponseEntity.status(500).body(Collections.singletonMap("error", e.getMessage()));
         }
     }
 
-
+    /**
+     * Obtiene una reserva específica por su identificador.
+     *
+     * @param id Identificador único de la reserva que se desea consultar.
+     * @return ResponseEntity con la reserva encontrada o un mensaje de error en caso de fallo.
+     */
     @GetMapping("/{id}")
-    public ResponseEntity<?> getBookingById(@PathVariable String id){
-        try{
-            Booking bukingSearch = bookingService.findById(id);
-            return ResponseEntity.status(200).body(bukingSearch);
-        }catch(RuntimeException e){
+    public ResponseEntity<?> getBookingById(@PathVariable String id) {
+        try {
+            Booking bookingSearch = bookingService.findById(id);
+            return ResponseEntity.status(200).body(bookingSearch);
+        } catch (RuntimeException e) {
             return ResponseEntity.status(500).body(Collections.singletonMap("error", e.getMessage()));
         }
-        
-
     }
-    
 }
