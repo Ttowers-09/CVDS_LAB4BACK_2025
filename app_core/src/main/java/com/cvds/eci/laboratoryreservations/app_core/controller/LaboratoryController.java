@@ -19,7 +19,7 @@ import com.cvds.eci.laboratoryreservations.app_core.service.LaboratoryService;
 
 @RestController
 @RequestMapping("/api/labs")
-@CrossOrigin(origins = "http://localhost:300")
+@CrossOrigin(origins = "http://localhost:3000")
 public class LaboratoryController {
     private final LaboratoryService labService;
 

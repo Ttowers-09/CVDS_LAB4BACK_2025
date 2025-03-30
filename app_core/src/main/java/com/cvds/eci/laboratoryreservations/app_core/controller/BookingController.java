@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.cvds.eci.laboratoryreservations.app_core.model.Booking;
 import com.cvds.eci.laboratoryreservations.app_core.service.BookingService;
 
+
 @RestController
 @RequestMapping("/api/bookings")
 @CrossOrigin(origins = "http://localhost:300")
@@ -89,4 +90,17 @@ public class BookingController {
             return ResponseEntity.status(500).body(Collections.singletonMap("error", e.getMessage()));
         }
     }
+
+    @GetMapping("/user/{id}")
+    public ResponseEntity<?>  getMethodName(@PathVariable String id) {
+        try{
+            Booking booking = bookingService.findByUserId(id);
+            return ResponseEntity.status(200).body(booking);
+        }
+        
+        catch (RuntimeException e) {
+            return ResponseEntity.status(500).body(Collections.singletonMap("error", e.getMessage()));
+        }
+    }
+    
 }

@@ -60,7 +60,7 @@ public class UsersDetails implements UserDetails {
     /**
      * Indica si la cuenta del usuario ha expirado.
      *
-     * @return `true` si la cuenta no ha expirado, de lo contrario `false`.
+     * @return `true` si la cuenta no ha expirado
      */
     @Override
     public boolean isAccountNonExpired() {
@@ -70,7 +70,7 @@ public class UsersDetails implements UserDetails {
     /**
      * Indica si la cuenta del usuario está bloqueada.
      *
-     * @return `true` si la cuenta no está bloqueada, de lo contrario `false`.
+     * @return `true` si la cuenta no está bloqueada
      */
     @Override
     public boolean isAccountNonLocked() {
@@ -80,7 +80,7 @@ public class UsersDetails implements UserDetails {
     /**
      * Indica si las credenciales del usuario han expirado.
      *
-     * @return `true` si las credenciales no han expirado, de lo contrario `false`.
+     * @return `true` si las credenciales no han expirado
      */
     @Override
     public boolean isCredentialsNonExpired() {
@@ -90,7 +90,7 @@ public class UsersDetails implements UserDetails {
     /**
      * Indica si el usuario está habilitado.
      *
-     * @return `true` si el usuario está habilitado, de lo contrario `false`.
+     * @return `true` si el usuario está habilitado
      */
     @Override
     public boolean isEnabled() {

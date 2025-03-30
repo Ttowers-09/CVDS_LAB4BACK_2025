@@ -7,8 +7,10 @@ import org.springframework.stereotype.Service;
 
 import com.cvds.eci.laboratoryreservations.app_core.model.Booking;
 import com.cvds.eci.laboratoryreservations.app_core.model.Laboratory;
+import com.cvds.eci.laboratoryreservations.app_core.model.User;
 import com.cvds.eci.laboratoryreservations.app_core.repository.BookingRepository;
 import com.cvds.eci.laboratoryreservations.app_core.repository.LaboratoryRepository;
+import com.cvds.eci.laboratoryreservations.app_core.repository.UserRepository;
 
 /**
  * Servicio encargado de gestionar las reservas de los laboratorios.
@@ -22,6 +24,9 @@ public class BookingService {
 
     @Autowired
     private LaboratoryRepository laboratoryRepository;
+
+    @Autowired
+    private UserRepository userRepository;
 
     /**
      * Obtiene todas las reservas registradas en el sistema.
@@ -98,12 +103,18 @@ public class BookingService {
         return bookingSearch;
     }
 
-    /**
-     * Obtiene el repositorio de reservas.
-     * 
-     * @return Objeto {@link BookingRepository}.
-     */
-    public BookingRepository getBookingRepository() {
-        return bookingRepository;
+    public Booking findByUserId(String userId){
+        User user = userRepository.findById(userId).orElse(null);
+
+        if (user == null) {
+            throw new RuntimeException("The booking with user id " + userId + " does not exist");
+        }
+
+        Booking booking = bookingRepository.findByUserId(user.getId()).orElse(null);
+        
+        
+
+        return booking;
     }
+
 }

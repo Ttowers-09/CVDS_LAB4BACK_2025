@@ -50,7 +50,8 @@ public class Booking {
      * Nombre del laboratorio reservado.
      */
     private String labName;
-    private int prioridad;
+    private Integer priority;
+    private String userId;
 
     /**
      * Constructor de la clase Booking.
@@ -61,34 +62,16 @@ public class Booking {
      * @param finalHour   Hora de finalización de la reserva.
      * @param description Descripción de la reserva.
      */
-    public Booking(String labName, LocalDate date, LocalTime initHour, LocalTime finalHour, String description, int prioridad) {
+    public Booking(String labName, LocalDate date, LocalTime initHour, LocalTime finalHour, String description, Integer priority ,String userId) {
         this.labName = labName;
         this.date = date;
         this.initHour = initHour;
         this.finalHour = finalHour;
         this.description = description;
-        this.prioridad = prioridad;
+        this.priority = priority;
+        this.userId = userId;
     }
 
-    /**
-     * Obtiene la prioridad de la reserva.
-     *
-     * @return Prioridad de la reserva.
-     */
-    
-    public int getPrioridad(){
-        return prioridad;
-    }
-
-
-    /**
-     * Establece la prioridad de la reserva.
-     *
-     * @param nuevaPrioridad Nueva prioridad de la reserva.
-     */
-    public void setPrioridad(int nuevaPrioridad){
-        this.prioridad = nuevaPrioridad;
-    }
 
     
     /**
@@ -198,4 +181,24 @@ public class Booking {
     public void setFinalHour(LocalTime finalHour) {
         this.finalHour = finalHour;
     }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserName(String userId) {
+        this.userId = userId;
+    }
+
+
+
+    public Integer getPriority() {
+        return priority;
+    }
+
+    public void setPriority(Integer priority) {
+        this.priority = priority;
+    }
+
+    
 }

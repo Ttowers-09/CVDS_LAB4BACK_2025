@@ -112,7 +112,7 @@ public class UserController {
      * @return String con la respuesta de verificación del usuario.
      */
     @PostMapping("/login")
-    public String verifyUser(@RequestBody User user) {
+    public String login(@RequestBody User user) {
         return userService.verify(user);
     }
 }

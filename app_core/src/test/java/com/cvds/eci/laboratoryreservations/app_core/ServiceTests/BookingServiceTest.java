@@ -42,7 +42,7 @@ public class BookingServiceTest {
     @BeforeEach
     void setUp() {
         laboratory = new Laboratory("Lab A", "Edificio 1, Piso 2", 30, true);
-        booking = new Booking("Lab A", LocalDate.of(2024, 8, 21), LocalTime.of(14, 30), LocalTime.of(16, 30), "Reserva para prueba", 1);
+        booking = new Booking("Lab A", LocalDate.of(2024, 8, 21), LocalTime.of(14, 30), LocalTime.of(16, 30), "Reserva para prueba", 1, "Salomon");
     }
     
     /**

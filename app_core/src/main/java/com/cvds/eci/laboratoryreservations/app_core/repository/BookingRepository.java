@@ -3,6 +3,7 @@ package com.cvds.eci.laboratoryreservations.app_core.repository;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 
@@ -26,5 +27,7 @@ public interface BookingRepository extends MongoRepository<Booking, String> {
     List<Booking> findByLabNameAndDateAndInitHourLessThanAndFinalHourGreaterThan(
     String labName, LocalDate date, LocalTime finalHour, LocalTime initHour
 );
+
+   Optional<Booking> findByUserId(String userId);
 
 }
