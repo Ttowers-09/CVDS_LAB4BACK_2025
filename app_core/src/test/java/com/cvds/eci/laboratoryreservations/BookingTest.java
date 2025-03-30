@@ -46,7 +46,7 @@ public class BookingTest {
     @Test
     void ShouldGetAExistingBooking(){
 
-        Booking booking1 = new Booking("RECO", LocalDate.of(1990, 03, 28), LocalTime.of(10, 0, 0),LocalTime.of(13, 0, 0), "Reserva para redes");
+        Booking booking1 = new Booking("RECO", LocalDate.of(1990, 03, 28), LocalTime.of(10, 0, 0),LocalTime.of(13, 0, 0), "Reserva para redes",0);
         booking1.setId("12345");
 
         //Configurar Mockito para simular respuestas
@@ -98,7 +98,7 @@ public class BookingTest {
     
     @Test
     void shouldCreateBookingSuccessfully() {
-        Booking booking5 = new Booking("RECO",  LocalDate.of(9000, 3, 28), LocalTime.of(10, 0), LocalTime.of(13, 0),  "Reserva para redes");
+        Booking booking5 = new Booking("RECO",  LocalDate.of(9000, 3, 28), LocalTime.of(10, 0), LocalTime.of(13, 0),  "Reserva para redes",0);
         booking5.setId("1234567890");
 
         when(bookingRepository.save(any(Booking.class))).thenReturn(booking5);
@@ -124,7 +124,7 @@ public class BookingTest {
     @Test
     void shouldDeleteBookingSuccessfully() {
         String bookingId = "12345678900";
-        Booking booking = new Booking("RECO", LocalDate.of(2020, 3, 12), LocalTime.of(10, 0), LocalTime.of(13, 0), "Reserva para redes");
+        Booking booking = new Booking("RECO", LocalDate.of(2020, 3, 12), LocalTime.of(10, 0), LocalTime.of(13, 0), "Reserva para redes",0);
         booking.setId(bookingId);
         
         when(bookingRepository.findById(bookingId)).thenReturn(Optional.of(booking));
