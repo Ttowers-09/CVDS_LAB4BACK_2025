@@ -92,9 +92,9 @@ public class BookingController {
     }
 
     @GetMapping("/user/{id}")
-    public ResponseEntity<?>  getMethodName(@PathVariable String id) {
+    public ResponseEntity<?>  getBookingbyUserId(@PathVariable String id) {
         try{
-            Booking booking = bookingService.findByUserId(id);
+            List<Booking> booking = bookingService.findAllBookingsByUserId(id);
             return ResponseEntity.status(200).body(booking);
         }
         

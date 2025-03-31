@@ -89,9 +89,9 @@ public class UserService implements UserDetailsService {
      * @throws RuntimeException If the user already exists.
      */
     public User addUser(User user) {
-        User existingUser = userRepository.findByEmail(user.getEmail());
+        User existingUser = userRepository.findByEmailAndName(user.getEmail(), user.getName());
         if (existingUser != null){
-            throw new RuntimeException("The mail " + user.getEmail() + "already exists .");
+            throw new RuntimeException("The user " + user.getName() + " and mail " + user.getEmail() + " already exists .");
         }
         user.setPassword(encoder.encode(user.getPassword()));
         return userRepository.save(user);
