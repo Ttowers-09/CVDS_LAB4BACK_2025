@@ -120,11 +120,15 @@ public class UserService implements UserDetailsService {
      * @return A JWT token if authentication is successful, otherwise "fail".
      */
     public String verify(User user) {
+        UserDetails userDetails = loadUserByUsername(user.getName());
         Authentication authentication = 
-        authManager.authenticate(new UsernamePasswordAuthenticationToken(user.getName(), user.getPassword()));
+        authManager.authenticate(new UsernamePasswordAuthenticationToken(user.getName(), user.getPassword(), userDetails.getAuthorities()));
 
        if(authentication.isAuthenticated()){
-        return jwtService.generateToken(user.getName());
+         // Aquí puedes decidir qué token devolver basado en el rol del usuario
+         UsersDetails usersDetails = (UsersDetails) userDetails;
+         String role = usersDetails.getUser().getRol(); // Asegúrate de que UsersDetails pueda devolver el User completo o al menos el rol
+        return jwtService.generateToken(user.getName(),role);
        }
 
        return "fail";

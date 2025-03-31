@@ -2,6 +2,8 @@ package com.cvds.eci.laboratoryreservations.app_core.controller;
 
 import java.util.Collections;
 import java.util.List;
+
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -113,10 +115,20 @@ public class UserController {
      * @param user Objeto User con la información de inicio de sesión.
      * @return String con la respuesta de verificación del usuario.
      */
-    @PostMapping("/login")
-    public String login(@RequestBody User user) {
-        return userService.verify(user);
-    }
+    @PostMapping("/user/login")
+    public ResponseEntity<?> loginUser(@RequestBody User loginRequest) {
+        try {
+            String token = userService.verify(loginRequest);
+            if (token != null) {
+                return ResponseEntity.ok(Collections.singletonMap("token", token));
+            } else {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Collections.singletonMap("error", e.getMessage()));
+        }
+}
+
 
 
     @PutMapping("/{id}")
@@ -128,4 +140,15 @@ public class UserController {
             return ResponseEntity.status(500).body(Collections.singletonMap("error", e.getMessage()));
         }
     }
+
+    @PostMapping("admin/login")
+    public ResponseEntity<?> loginAdmin(@RequestBody User user) {
+        String token = userService.verify(user);
+        if (!token.equals("fail")) {
+            return ResponseEntity.ok(token);
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Login failed");
+        }
+}
+
 }

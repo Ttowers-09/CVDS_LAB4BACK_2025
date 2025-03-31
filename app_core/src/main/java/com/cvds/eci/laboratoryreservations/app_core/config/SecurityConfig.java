@@ -59,13 +59,12 @@ public class SecurityConfig {
                 
                 .csrf(customizer -> customizer.disable())
 
-
                 // Requires authentication for all requests to the server.
                 .authorizeHttpRequests(request -> request
-                .requestMatchers("/login")
-                .permitAll()
+                .requestMatchers("/login","/sign-in").permitAll()
+                .requestMatchers("/api/users/user/**").hasAuthority("ROLE_user")
+                .requestMatchers("/api/users/admin/**").hasAuthority("ROLE_admin")
                 .anyRequest().authenticated())
-
                 // Enables a default login form provided by Spring Security.
                 //.formLogin(Customizer.withDefaults())
 
@@ -77,6 +76,7 @@ public class SecurityConfig {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
+
     }
 
     @Bean

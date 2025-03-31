@@ -49,9 +49,9 @@ public class JWTService {
      * @param name Nombre del usuario para el cual se generará el token.
      * @return Un token JWT firmado como una cadena de texto.
      */
-    public String generateToken(String name) {
+    public String generateToken(String name, String role) {
         Map<String, Object> claims = new HashMap<>();
-
+        claims.put("role", role);
         // Construcción del JWT con claims, sujeto, fecha de emisión y expiración
         return Jwts.builder()
                 .claims()
