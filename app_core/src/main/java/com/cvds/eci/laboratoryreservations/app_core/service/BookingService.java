@@ -103,16 +103,14 @@ public class BookingService {
         return bookingSearch;
     }
 
-    public Booking findByUserId(String userId){
-        User user = userRepository.findById(userId).orElse(null);
-
-        if (user == null) {
-            throw new RuntimeException("The booking with user id " + userId + " does not exist");
-        }
-
-        Booking booking = bookingRepository.findByUserId(user.getId()).orElse(null);
-
-        return booking;
+    public List<Booking> findAllBookingsByUserId(String userId){
+        User user = userRepository.findById(userId).orElseThrow(
+            () -> new RuntimeException("The user with id " + userId + " does not exist")
+        );
+    
+        
+        return bookingRepository.findAllByUserId(user.getId());
     }
+    
 
 }

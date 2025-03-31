@@ -2,6 +2,8 @@ package com.cvds.eci.laboratoryreservations.app_core.controller;
 
 import java.util.Collections;
 import java.util.List;
+
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -33,7 +35,7 @@ public class UserController {
      *
      * @return ResponseEntity con la lista de usuarios en caso de éxito o un mensaje de error en caso de fallo.
      */
-    @GetMapping("/get-users")
+    @GetMapping("admin/get-users")
     public ResponseEntity<?> getUsers() {
         try {
             List<User> users = userService.getAllUsers();
@@ -113,10 +115,20 @@ public class UserController {
      * @param user Objeto User con la información de inicio de sesión.
      * @return String con la respuesta de verificación del usuario.
      */
-    @PostMapping("/login")
-    public String login(@RequestBody User user) {
-        return userService.verify(user);
+    @PostMapping("/user/login")
+    public ResponseEntity<?> loginUser(@RequestBody User loginRequest) {
+        try {
+            String token = userService.verifyUserRole(loginRequest, loginRequest.getRol());
+            if (token != null) {
+                return ResponseEntity.ok(Collections.singletonMap("token", token));
+            } else {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Collections.singletonMap("error", e.getMessage()));
+        }
     }
+
 
 
     @PutMapping("/{id}")
@@ -126,6 +138,20 @@ public class UserController {
             return ResponseEntity.ok().body("User updated OK");
         } catch (Exception e) {
             return ResponseEntity.status(500).body(Collections.singletonMap("error", e.getMessage()));
+        }
+    }
+
+    @PostMapping("/admin/login")
+    public ResponseEntity<?> loginAdmin(@RequestBody User loginRequest) {
+        try {
+            String token = userService.verifyUserRole(loginRequest, loginRequest.getRol());
+            if (token != null) {
+                return ResponseEntity.ok(Collections.singletonMap("token", token));
+            } else {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Collections.singletonMap("error", e.getMessage()));
         }
     }
 }
