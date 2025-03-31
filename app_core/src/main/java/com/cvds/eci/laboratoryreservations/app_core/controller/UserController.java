@@ -35,7 +35,7 @@ public class UserController {
      *
      * @return ResponseEntity con la lista de usuarios en caso de éxito o un mensaje de error en caso de fallo.
      */
-    @GetMapping("/get-users")
+    @GetMapping("admin/get-users")
     public ResponseEntity<?> getUsers() {
         try {
             List<User> users = userService.getAllUsers();
@@ -118,7 +118,7 @@ public class UserController {
     @PostMapping("/user/login")
     public ResponseEntity<?> loginUser(@RequestBody User loginRequest) {
         try {
-            String token = userService.verify(loginRequest);
+            String token = userService.verifyUserRole(loginRequest, loginRequest.getRol());
             if (token != null) {
                 return ResponseEntity.ok(Collections.singletonMap("token", token));
             } else {
@@ -127,7 +127,7 @@ public class UserController {
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Collections.singletonMap("error", e.getMessage()));
         }
-}
+    }
 
 
 
@@ -141,14 +141,17 @@ public class UserController {
         }
     }
 
-    @PostMapping("admin/login")
-    public ResponseEntity<?> loginAdmin(@RequestBody User user) {
-        String token = userService.verify(user);
-        if (!token.equals("fail")) {
-            return ResponseEntity.ok(token);
-        } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Login failed");
+    @PostMapping("/admin/login")
+    public ResponseEntity<?> loginAdmin(@RequestBody User loginRequest) {
+        try {
+            String token = userService.verifyUserRole(loginRequest, loginRequest.getRol());
+            if (token != null) {
+                return ResponseEntity.ok(Collections.singletonMap("token", token));
+            } else {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Collections.singletonMap("error", e.getMessage()));
         }
-}
-
+    }
 }
