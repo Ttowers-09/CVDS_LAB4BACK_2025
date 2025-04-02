@@ -12,7 +12,7 @@ public class WebConfig {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/api/**")
-                        .allowedOrigins("http://localhost:3000")
+                        .allowedOrigins("mango-tree-0de7e7d0f.6.azurestaticapps.net")
                         .allowedMethods("GET", "POST", "PUT", "DELETE")
                         .allowedHeaders("*") // Permite todos los headers
                         .allowCredentials(true);
