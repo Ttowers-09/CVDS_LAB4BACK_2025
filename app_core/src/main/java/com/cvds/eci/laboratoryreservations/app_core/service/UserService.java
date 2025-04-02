@@ -170,4 +170,20 @@ public class UserService implements UserDetailsService {
             throw new RuntimeException("User with ID " + userid + " not found");
         }
     }
+
+    public String verifyUserCredentials(User user) throws Exception {
+        User userInDB = userRepository.findByName(user.getName());
+        if (userInDB == null) {
+            throw new Exception("Usuario no encontrado");
+        }
+    
+        boolean passwordMatches = encoder.matches(user.getPassword(), userInDB.getPassword());
+        if (!passwordMatches) {
+            throw new Exception("Contraseña incorrecta");
+        }
+    
+        // Genera el token usando el rol almacenado en BD
+        return jwtService.generateToken(userInDB.getName(), userInDB.getRol());
+    }
+    
 }

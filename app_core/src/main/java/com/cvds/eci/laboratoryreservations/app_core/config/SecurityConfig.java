@@ -61,9 +61,8 @@ public class SecurityConfig {
 
                 // Requires authentication for all requests to the server.
                 .authorizeHttpRequests(request -> request
-                .requestMatchers("/login","/sign-in").permitAll()
-                .requestMatchers("/api/users/user/**").hasAuthority("ROLE_user")
-                .requestMatchers("/api/users/admin/**").hasAuthority("ROLE_admin")
+                .requestMatchers("/api/users/login", "/api/users/add").permitAll()
+                .requestMatchers("/api/users/**").hasAnyAuthority("ROLE_admin")
                 .anyRequest().authenticated())
                 // Enables a default login form provided by Spring Security.
                 //.formLogin(Customizer.withDefaults())

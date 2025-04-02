@@ -35,7 +35,7 @@ public class UserController {
      *
      * @return ResponseEntity con la lista de usuarios en caso de éxito o un mensaje de error en caso de fallo.
      */
-    @GetMapping("admin/get-users")
+    @GetMapping
     public ResponseEntity<?> getUsers() {
         try {
             List<User> users = userService.getAllUsers();
@@ -110,27 +110,12 @@ public class UserController {
     }
 
     /**
-     * Verifica las credenciales de un usuario en el sistema.
+     * Actualiza la información de un usuario existente.
      *
-     * @param user Objeto User con la información de inicio de sesión.
-     * @return String con la respuesta de verificación del usuario.
+     * @param id Identificador único del usuario a actualizar.
+     * @param user Objeto User con la nueva información del usuario.
+     * @return ResponseEntity con un mensaje de confirmación o un mensaje de error en caso de fallo.
      */
-    @PostMapping("/user/login")
-    public ResponseEntity<?> loginUser(@RequestBody User loginRequest) {
-        try {
-            String token = userService.verifyUserRole(loginRequest, loginRequest.getRol());
-            if (token != null) {
-                return ResponseEntity.ok(Collections.singletonMap("token", token));
-            } else {
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-            }
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Collections.singletonMap("error", e.getMessage()));
-        }
-    }
-
-
-
     @PutMapping("/{id}")
     public ResponseEntity<?> putMethodName(@PathVariable String id, @RequestBody User user) {
         try {
@@ -141,17 +126,21 @@ public class UserController {
         }
     }
 
-    @PostMapping("/admin/login")
-    public ResponseEntity<?> loginAdmin(@RequestBody User loginRequest) {
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody User loginRequest) {
         try {
-            String token = userService.verifyUserRole(loginRequest, loginRequest.getRol());
+            // Este método se encarga de verificar usuario y rol automáticamente
+            String token = userService.verifyUserCredentials(loginRequest);
             if (token != null) {
                 return ResponseEntity.ok(Collections.singletonMap("token", token));
             } else {
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
             }
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Collections.singletonMap("error", e.getMessage()));
+            return ResponseEntity
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(Collections.singletonMap("error", e.getMessage()));
         }
     }
+
 }
