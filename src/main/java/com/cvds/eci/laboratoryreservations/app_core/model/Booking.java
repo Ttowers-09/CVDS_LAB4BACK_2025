@@ -181,21 +181,39 @@ public class Booking {
     public void setFinalHour(LocalTime finalHour) {
         this.finalHour = finalHour;
     }
-
+    /**
+     * Obtiene el identificador del usuario.
+     *
+     * @return userId El identificador del usuario.
+     */
     public String getUserId() {
         return userId;
     }
 
+    /**
+     * Establece el identificador del usuario.
+     *
+     * @param userId Nuevo identificador del usuario.
+     */
     public void setUserName(String userId) {
         this.userId = userId;
     }
 
-
+    /**
+     * Obtiene la prioridad del usuario.
+     *
+     * @return priority Nivel de prioridad del usuario.
+     */
 
     public Integer getPriority() {
         return priority;
     }
 
+    /**
+     * Establece la prioridad del usuario.
+     *
+     * @param priority Nuevo nivel de prioridad del usuario.
+     */
     public void setPriority(Integer priority) {
         this.priority = priority;
     }

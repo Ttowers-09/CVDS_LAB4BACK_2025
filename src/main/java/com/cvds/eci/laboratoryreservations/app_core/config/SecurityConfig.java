@@ -78,6 +78,12 @@ public class SecurityConfig {
 
     }
 
+    /**
+     * Configura la política CORS (Cross-Origin Resource Sharing) para la aplicación.
+     * Permite el acceso desde un origen específico y define los métodos HTTP permitidos.
+     *
+     * @return CorsConfigurationSource configurado para la aplicación.
+     */
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
@@ -109,18 +115,18 @@ public class SecurityConfig {
         return daoProvider;
     }
 
-/**
- * Creates and configures an AuthenticationManager using Spring Security's authentication configuration.
- * The AuthenticationManager is a central interface in Spring Security for authenticating users.
- *
- * @param config A pre-built AuthenticationConfiguration object provided by Spring Security which
- *               allows customization and retrieval of authentication-related settings.
- * @return An AuthenticationManager that is configured to handle the authentication process.
- * @throws Exception If there is an issue with obtaining the AuthenticationManager from the configuration.
- */
-@Bean
-public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
-    return config.getAuthenticationManager();
-}
+    /**
+     * Creates and configures an AuthenticationManager using Spring Security's authentication configuration.
+     * The AuthenticationManager is a central interface in Spring Security for authenticating users.
+     *
+     * @param config A pre-built AuthenticationConfiguration object provided by Spring Security which
+     *               allows customization and retrieval of authentication-related settings.
+     * @return An AuthenticationManager that is configured to handle the authentication process.
+     * @throws Exception If there is an issue with obtaining the AuthenticationManager from the configuration.
+     */
+    @Bean
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
+        return config.getAuthenticationManager();
+    }
 
 }

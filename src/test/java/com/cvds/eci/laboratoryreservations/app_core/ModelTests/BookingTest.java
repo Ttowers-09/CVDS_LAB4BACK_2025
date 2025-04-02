@@ -17,11 +17,21 @@ public class BookingTest {
 
     private Booking booking;
 
+
+    /**
+     * Configuración inicial antes de cada prueba.
+     * Crea un objeto Booking con valores predeterminados para ser utilizado en las pruebas.
+     */
     @BeforeEach
     void setUp() {
         booking = new Booking("Lab A", LocalDate.of(2024, 8, 21),
                 LocalTime.of(14, 30), LocalTime.of(16, 30), "Reserva de prueba", 1, "user123");
     }
+
+    /**
+     * Prueba unitaria para verificar la correcta creación de un objeto Booking.
+     * Se asegura de que los valores iniciales del objeto sean los esperados.
+     */
 
     @Test
     void testBookingCreation() {
@@ -34,6 +44,11 @@ public class BookingTest {
         assertEquals(1, booking.getPriority());
         assertEquals("user123", booking.getUserId());
     }
+
+    /**
+     * Prueba unitaria para verificar el correcto funcionamiento de los métodos setter en Booking.
+     * Modifica los valores del objeto y verifica que se actualicen correctamente.
+     */
 
     @Test
     void testSetters() {

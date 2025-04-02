@@ -91,6 +91,14 @@ public class BookingController {
         }
     }
 
+    /**
+     * Método para obtener todas las reservas realizadas por un usuario específico.
+     * 
+     * @param id Identificador del usuario cuyas reservas se desean recuperar.
+     * @return ResponseEntity con la lista de reservas si la operación es exitosa,
+     *         o un mensaje de error en caso de fallo.
+     */
+
     @GetMapping("/user/{id}")
     public ResponseEntity<?>  getBookingbyUserId(@PathVariable String id) {
         try{

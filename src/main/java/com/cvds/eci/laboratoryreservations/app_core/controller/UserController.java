@@ -126,6 +126,15 @@ public class UserController {
         }
     }
 
+    /**
+     * Método para autenticar a un usuario y generar un token de acceso.
+     *
+     * @param loginRequest Objeto User que contiene las credenciales de inicio de sesión.
+     * @return ResponseEntity con el token de autenticación si las credenciales son válidas,
+     *         o un estado HTTP 401 (No Autorizado) si la autenticación falla.
+     *         En caso de error interno, retorna un estado HTTP 500 con un mensaje de error.
+     */
+
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody User loginRequest) {
         try {
