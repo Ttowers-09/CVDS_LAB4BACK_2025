@@ -103,6 +103,13 @@ public class BookingService {
         return bookingSearch;
     }
 
+    /**
+     * Busca todas las reservas asociadas a un usuario específico.
+     *
+     * @param userId Identificador del usuario cuyas reservas se desean recuperar.
+     * @return Lista de objetos Booking asociados al usuario.
+     * @throws RuntimeException Si el usuario con el ID proporcionado no existe.
+     */
     public List<Booking> findAllBookingsByUserId(String userId){
         User user = userRepository.findById(userId).orElseThrow(
             () -> new RuntimeException("The user with id " + userId + " does not exist")

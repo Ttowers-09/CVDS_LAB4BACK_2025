@@ -158,6 +158,13 @@ public class UserService implements UserDetailsService {
         return new UsersDetails(user);
     }
 
+    /**
+     * Actualiza la información de un usuario existente.
+     *
+     * @param userid Identificador del usuario a actualizar.
+     * @param user Objeto User con los nuevos datos a modificar.
+     * @throws RuntimeException Si el usuario con el ID proporcionado no existe.
+     */
     public void updateUser(String userid,User user){
         Optional<User> userUpdate = userRepository.findById(userid);
 
@@ -171,6 +178,13 @@ public class UserService implements UserDetailsService {
         }
     }
 
+    /**
+     * Verifica las credenciales de un usuario y genera un token de autenticación.
+     *
+     * @param user Objeto User con las credenciales ingresadas.
+     * @return Token de autenticación si las credenciales son válidas.
+     * @throws Exception Si el usuario no es encontrado o la contraseña es incorrecta.
+     */
     public String verifyUserCredentials(User user) throws Exception {
         User userInDB = userRepository.findByName(user.getName());
         if (userInDB == null) {

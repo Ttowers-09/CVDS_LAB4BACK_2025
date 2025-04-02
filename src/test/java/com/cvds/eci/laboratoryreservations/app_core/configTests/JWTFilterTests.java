@@ -51,10 +51,22 @@ class JwtFilterTests {
     @Mock
     private UserDetails userDetails;
 
+    /**
+     * Configuración inicial antes de ejecutar cada prueba.
+     * Se asegura de limpiar el contexto de seguridad para evitar interferencias entre pruebas.
+     */
     @BeforeEach
     void setUp() {
-        SecurityContextHolder.clearContext(); // Limpia el contexto de seguridad antes de cada prueba
+        SecurityContextHolder.clearContext(); 
     }
+
+    /**
+     * Verifica que el filtro continúe con la cadena de filtros cuando no se proporciona
+     * un encabezado de autorización en la solicitud.
+     *
+     * @throws ServletException En caso de error en la ejecución del filtro.
+     * @throws IOException En caso de error en la lectura/escritura de la solicitud o respuesta.
+     */
 
     @Test
     void shouldContinueFilterWhenNoAuthHeader() throws ServletException, IOException {
@@ -65,6 +77,13 @@ class JwtFilterTests {
         verify(jwtService, never()).extractUsername(any());
         verify(filterChain).doFilter(request, response);
     }
+
+    /**
+     * Verifica que no se autentique al usuario cuando el token de autenticación es inválido.
+     *
+     * @throws ServletException En caso de error en la ejecución del filtro.
+     * @throws IOException En caso de error en la lectura/escritura de la solicitud o respuesta.
+     */
 
     @Test
     void shouldNotAuthenticateWhenInvalidToken() throws ServletException, IOException {
@@ -77,6 +96,13 @@ class JwtFilterTests {
         verify(filterChain).doFilter(request, response);
         verify(context, never()).getBean(UserDetailService.class);
     }
+
+    /**
+     * Verifica que el usuario sea autenticado correctamente cuando el token es válido.
+     *
+     * @throws ServletException En caso de error en la ejecución del filtro.
+     * @throws IOException En caso de error en la lectura/escritura de la solicitud o respuesta.
+     */
 
     @Test
     void shouldAuthenticateWhenValidToken() throws ServletException, IOException {

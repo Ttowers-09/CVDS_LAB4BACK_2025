@@ -97,10 +97,20 @@ public class UsersDetails implements UserDetails {
         return true;
     }
 
+    /**
+     * Obtiene el objeto User asociado.
+     *
+     * @return user El objeto User.
+     */
     public User getUser() {
         return user;
     }
 
+    /**
+     * Establece el objeto User.
+     *
+     * @param user Nuevo objeto User a asignar.
+     */
     public void setUser(User user) {
         this.user = user;
     }
