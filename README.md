@@ -60,7 +60,6 @@ Asegúrate de que MongoDB está corriendo en `localhost:27017`. Puedes modificar
 ```bash
 mvn spring-boot:run
 ```
-La aplicación estará disponible en `http://localhost:8080/`.
 
 ## 🚀 Endpoints
 
@@ -156,13 +155,6 @@ public class Booking {
 
 ---
 
-## 📌 Flujo de Datos
-1️⃣ Un usuario inicia sesión (`POST /api/users/login`).
-2️⃣ Si la autenticación es correcta, puede hacer una reserva (`POST /api/bookings`).
-3️⃣ Se guarda la reserva y se asocia a un laboratorio y un usuario.
-4️⃣ Se pueden consultar todas las reservas (`GET /api/bookings`) o filtrarlas por usuario o laboratorio.
-5️⃣ Se pueden eliminar o actualizar reservas y laboratorios según sea necesario.
-
 # Servicios de la API de Reservas de Laboratorios
 
 ## BookingService
@@ -242,11 +234,6 @@ Ubicada en `com.cvds.eci.laboratoryreservations.app_core.repository`, esta inter
 - **`findByEmailAndName(String email, String name)`**
   - Recupera un usuario a partir de su correo y nombre.
 
-## Tecnologías Utilizadas
-
-- **MongoDB**: Base de datos NoSQL utilizada para almacenar y gestionar los datos de usuarios, reservas y laboratorios.
-- **Spring Data MongoDB**: Framework que permite la integración y acceso a MongoDB de manera simplificada a través de repositorios e interfaces.
-- **Java (Spring Boot)**: Lenguaje y framework utilizados para el desarrollo de la lógica de la aplicación y la interacción con la base de datos.
 
 ## Cambios en la Estructura del Proyecto
 
@@ -275,5 +262,5 @@ project-root/
 
 
 ---
-📌 **Desarrollado por [Tu Nombre]**
+📌 **Desarrollado por: Salomon Baena , Camilo Quintero, Ivan Forero, Sebastian Beltrán**
 
