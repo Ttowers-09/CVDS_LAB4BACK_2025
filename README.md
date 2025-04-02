@@ -259,6 +259,13 @@ project-root/
 ```
 
 
+# JACOCO Y DOCKER
+
+mvn verify sonar:sonar -D sonar.token=squ_6a17525a64e3b3e95e521e550478e75cd4710aff
+
+![image](https://github.com/user-attachments/assets/5a3bdbea-8565-435e-8632-8ffae190deb3)
+
+
 
 
 ---
