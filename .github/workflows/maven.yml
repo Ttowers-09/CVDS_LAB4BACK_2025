@@ -38,7 +38,7 @@ jobs:
           cache: maven
 
       - name: Run Tests (Verify phase)
-        run: mvn -B verify --file app_core/pom.xml
+        run: mvn -B verify 
 
   deploy:
     runs-on: ubuntu-latest
