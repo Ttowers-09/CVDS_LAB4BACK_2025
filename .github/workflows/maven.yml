@@ -20,7 +20,7 @@ jobs:
           cache: maven
 
       - name: Build (Compile only)
-        run: mvn -B compile --file app_core/pom.xml
+        run: mvn -B compile 
 
   test:
     runs-on: ubuntu-latest
